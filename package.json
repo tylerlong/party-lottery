@@ -1,0 +1,30 @@
+{
+  "name": "party-lottery",
+  "description": "Choose lucky ones to receive gifts during party.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --open --progress --colors",
+    "release": "webpack --progress --colors --config webpack.config.prod.babel.js"
+  },
+  "dependencies": {
+    "director": "^1.2.8",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
+    "standard": "^12.0.1",
+    "style-loader": "^0.23.1",
+    "yarn-upgrade-all": "^0.5.0"
+  }
+}
