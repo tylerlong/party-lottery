@@ -33,17 +33,17 @@ class Teams extends Component {
     const store = this.props.store
     return <div>
       <hr />
-      <select onChange={e => {
+      <select onChange={async e => {
         const value = e.target.value
         if (value === '-1') {
           delete store.team
           return
         }
-        const [id, name] = value.split(':')
-        store.team = { id, name }
+        store.team = store.teams.find(team => team.id === value)
+        store.members = await rc.getGlipUsers(store.team.members)
       }}>
         <option key='-1' value='-1'>Please select a team</option>
-        {store.teams.map(team => <option value={team.id + ':' + team.name} key={team.id}>{team.name}</option>)}
+        {store.teams.map(team => <option value={team.id} key={team.id}>{team.name}</option>)}
       </select>
       { store.team ? <Team store={store} /> : '' }
     </div>
@@ -58,8 +58,18 @@ class Team extends Component {
       <button onClick={e => {
         const team = store.teams.find(team => team.id === store.team.id)
         const luckyOneId = team.members[Math.floor(Math.random() * team.members.length)]
-        rc.post(`/restapi/v1.0/glip/groups/${team.id}/posts`, { text: `![:Person](${luckyOneId})` })
+        store.luckyOne = luckyOneId
+        rc.post(`/restapi/v1.0/glip/groups/${team.id}/posts`, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
       }}>Choose a lucky one</button>
+      { store.luckyOne ? <LuckyOne store={store} /> : '' }
     </>
+  }
+}
+
+class LuckyOne extends Component {
+  render () {
+    const store = this.props.store
+    const member = store.members[store.luckyOne]
+    return <h1>Congratulations { member ? member.email : store.luckyOne }</h1>
   }
 }
