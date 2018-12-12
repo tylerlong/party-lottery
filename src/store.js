@@ -21,6 +21,17 @@ const store = SubX.create({
 })
 
 rc.token(token)
+if (token) {
+  (async () => {
+    const r = await rc.get('/restapi/v1.0/account/~/extension/~')
+    store.user = r.data
+  })()
+  ;(async () => {
+    const r = await rc.get('/restapi/v1.0/glip/groups', { params: { type: 'Team', recordCount: 250 } })
+    store.teams = r.data.records
+    console.log(r.data.records)
+  })()
+}
 rc.on('tokenChanged', async token => {
   const oldToken = store.token
   store.token = token
@@ -33,7 +44,9 @@ rc.on('tokenChanged', async token => {
 const urlParams = new URLSearchParams(window.location.search)
 const code = urlParams.get('code')
 if (code) {
-  rc.authorize({ code, redirectUri: config.APP_HOME_URI })
+  (async () => {
+    await rc.authorize({ code, redirectUri: config.APP_HOME_URI })
+  })()
 }
 
 export default store
