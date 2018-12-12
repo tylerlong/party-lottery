@@ -16,7 +16,6 @@ Cookies.set = (key, value, options) => {
 const token = Cookies.getJSON('RINGCENTRAL_TOKEN')
 
 const store = SubX.create({
-  step: 1,
   token
 })
 
