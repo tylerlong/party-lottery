@@ -10,7 +10,9 @@
   "dependencies": {
     "director": "^1.2.8",
     "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react-dom": "^16.6.3",
+    "react-subx": "^0.4.8",
+    "subx": "^0.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
@@ -25,6 +27,19 @@
     "jest": "^23.6.0",
     "standard": "^12.0.1",
     "style-loader": "^0.23.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
     "yarn-upgrade-all": "^0.5.0"
+  },
+  "standard": {
+    "ignore": [
+      "/docs/"
+    ]
+  },
+  "yarn-upgrade-all": {
+    "ignore": [
+      "babel-core"
+    ]
   }
 }
