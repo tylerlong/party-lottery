@@ -1,5 +1,6 @@
 import React from 'react'
 import { Component } from 'react-subx'
+import { Button } from 'antd'
 
 import rc from './ringcentral'
 import config from './config'
@@ -12,7 +13,7 @@ export class App extends Component {
       return <a href={authorizeUri}>Log in</a>
     }
     return <div>
-      <button onClick={e => rc.revoke()}>Log out</button>
+      <Button onClick={e => rc.revoke()}>Log out</Button>
       {store.user ? <User store={store} /> : ''}
     </div>
   }
@@ -55,12 +56,12 @@ class Team extends Component {
     const store = this.props.store
     return <>
       <h1>{store.team.name}</h1>
-      <button onClick={e => {
+      <Button onClick={e => {
         const team = store.teams.find(team => team.id === store.team.id)
         const luckyOneId = team.members[Math.floor(Math.random() * team.members.length)]
         store.luckyOne = luckyOneId
         rc.post(`/restapi/v1.0/glip/groups/${team.id}/posts`, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
-      }}>Choose a lucky one</button>
+      }}>Choose a lucky one</Button>
       { store.luckyOne ? <LuckyOne store={store} /> : '' }
     </>
   }
