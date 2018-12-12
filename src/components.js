@@ -41,7 +41,6 @@ class Teams extends Component {
         }
         const [id, name] = value.split(':')
         store.team = { id, name }
-        console.log(`You selected team ${name}, #id ${id}`)
       }}>
         <option key='-1' value='-1'>Please select a team</option>
         {store.teams.map(team => <option value={team.id + ':' + team.name} key={team.id}>{team.name}</option>)}
@@ -54,6 +53,13 @@ class Teams extends Component {
 class Team extends Component {
   render () {
     const store = this.props.store
-    return <h1>{store.team.name}</h1>
+    return <>
+      <h1>{store.team.name}</h1>
+      <button onClick={e => {
+        const team = store.teams.find(team => team.id === store.team.id)
+        const luckyOneId = team.members[Math.floor(Math.random() * team.members.length)]
+        rc.post(`/restapi/v1.0/glip/groups/${team.id}/posts`, { text: `![:Person](${luckyOneId})` })
+      }}>Who is lucky?</button>
+    </>
   }
 }

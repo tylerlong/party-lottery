@@ -29,7 +29,6 @@ if (token) {
   ;(async () => {
     const r = await rc.get('/restapi/v1.0/glip/groups', { params: { type: 'Team', recordCount: 250 } })
     store.teams = r.data.records
-    console.log(r.data.records)
   })()
 }
 rc.on('tokenChanged', async token => {
