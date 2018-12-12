@@ -70,6 +70,8 @@ class LuckyOne extends Component {
   render () {
     const store = this.props.store
     const member = store.members[store.luckyOne]
-    return <h1>Congratulations { member ? member.email : store.luckyOne }</h1>
+    return <h1>Congratulations { member
+      ? <span>{ member.email } <img width='128' src={member.avatar} /></span>
+      : store.luckyOne }</h1>
   }
 }
