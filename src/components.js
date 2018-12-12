@@ -1,6 +1,6 @@
 import React from 'react'
 import { Component } from 'react-subx'
-import { Button } from 'antd'
+import { Button, Select, Row, Col } from 'antd'
 
 import rc from './ringcentral'
 import config from './config'
@@ -13,7 +13,7 @@ export class App extends Component {
       return <a href={authorizeUri}>Log in</a>
     }
     return <div>
-      <Button onClick={e => rc.revoke()}>Log out</Button>
+      <Button style={{ float: 'right' }} onClick={e => rc.revoke()}>Log out</Button>
       {store.user ? <User store={store} /> : ''}
     </div>
   }
@@ -23,8 +23,8 @@ class User extends Component {
   render () {
     const store = this.props.store
     return <>
-      <span>You logged in as {store.user.contact.email}</span>
-      { store.teams ? <Teams store={store} /> : '' }
+      <span>{store.user.contact.email}</span>
+      <Row style={{ marginTop: '64px' }}><Col span={12} offset={6}>{ store.teams ? <Teams store={store} /> : '' }</Col></Row>
   </>
   }
 }
@@ -33,9 +33,7 @@ class Teams extends Component {
   render () {
     const store = this.props.store
     return <div>
-      <hr />
-      <select onChange={async e => {
-        const value = e.target.value
+      <Select style={{ width: 256 }} defaultValue='-1' onChange={async value => {
         if (value === '-1') {
           delete store.team
           return
@@ -43,9 +41,9 @@ class Teams extends Component {
         store.team = store.teams.find(team => team.id === value)
         store.members = await rc.getGlipUsers(store.team.members)
       }}>
-        <option key='-1' value='-1'>Please select a team</option>
-        {store.teams.map(team => <option value={team.id} key={team.id}>{team.name}</option>)}
-      </select>
+        <Select.Option key='-1' value='-1'>Please select a team</Select.Option>
+        {store.teams.map(team => <Select.Option value={team.id} key={team.id}>{team.name}</Select.Option>)}
+      </Select>
       { store.team ? <Team store={store} /> : '' }
     </div>
   }
