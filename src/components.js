@@ -59,7 +59,7 @@ class Team extends Component {
         const team = store.teams.find(team => team.id === store.team.id)
         const luckyOneId = team.members[Math.floor(Math.random() * team.members.length)]
         rc.post(`/restapi/v1.0/glip/groups/${team.id}/posts`, { text: `![:Person](${luckyOneId})` })
-      }}>Who is lucky?</button>
+      }}>Choose a lucky one</button>
     </>
   }
 }
