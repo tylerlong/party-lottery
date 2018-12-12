@@ -26,14 +26,14 @@ rc.on('tokenChanged', async token => {
   store.token = token
   Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 7 })
   if (!oldToken && token) {
-    window.location.replace(config.OAUTH_REDIRECT_URI)
+    window.location.replace(config.APP_HOME_URI)
   }
 })
 
 const urlParams = new URLSearchParams(window.location.search)
 const code = urlParams.get('code')
 if (code) {
-  rc.authorize({ code, redirectUri: config.OAUTH_REDIRECT_URI })
+  rc.authorize({ code, redirectUri: config.APP_HOME_URI })
 }
 
 export default store
