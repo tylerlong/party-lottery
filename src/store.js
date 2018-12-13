@@ -82,7 +82,7 @@ const store = SubX.create({
     while (this.choosing) {
       for (const memberId of this.team.members) {
         store.tempOne = this.members[memberId]
-        await delay(20)
+        await delay(10)
       }
     }
   }

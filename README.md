@@ -22,8 +22,3 @@ yarn release
 Static files are generated in [docs](./docs) folder.
 You may deploy these static files to any server.
 This app is pure client side, deploy it just like deploying any other static websites.
-
-
-## Todo
-
-- Preload memebers avatar image
