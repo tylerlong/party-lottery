@@ -4863,10 +4863,10 @@ raf@^3.4.0, raf@^3.4.1:
   dependencies:
     performance-now "^2.1.0"
 
-ramda@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
-  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
+ramda@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.0.6"
@@ -5346,10 +5346,10 @@ react-slick@~0.23.2:
     prettier "^1.14.3"
     resize-observer-polyfill "^1.5.0"
 
-react-subx@^0.4.8:
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/react-subx/-/react-subx-0.4.8.tgz#f2017ed00b6fdb1c819947a29ceff8e891ee20cc"
-  integrity sha512-PcYrKtJZCvwegWWm2zCpN0iw+na61dmvRZ1oFRObMhYx6/mCgBKkOjr1JV6FFEoEy8I9TjcSZHvta2d/6d24Gg==
+react-subx@^0.4.9:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/react-subx/-/react-subx-0.4.9.tgz#2a9efc560d88cc26595dc49067b560b53f0def37"
+  integrity sha512-RJn9oQLP3BHL1IKxQ4Us/TcS0EGlopUV1xA6qVhKsp9I+pLuRayen+hnDBadJIWdcJMNG8+p22Y0IpkfeQw7PQ==
 
 react@^16.6.3:
   version "16.6.3"
@@ -6170,12 +6170,12 @@ style-loader@^0.23.1:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
 
-subx@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/subx/-/subx-0.7.2.tgz#6791174ae7da30136955fe8f266a640b5f418eab"
-  integrity sha512-SFexxx+FsdUDHi1xzW3/H0VdV/iLqKKYtoEAw6LMOEEAgoREChGs6iofd6V5F+B2m0daC+Y9Y/k/Odju2a++QQ==
+subx@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/subx/-/subx-0.7.3.tgz#56080697c09c4e28e3fed43b82a9230d9991aec3"
+  integrity sha512-yFwl80Qmfwk9bpQRtWmqoylNRPVULl2QHg5LyObqqtTXqc11Fg/m4VdNVtTM/BLhx6ycxy/HlFUba7qCd6JfqA==
   dependencies:
-    ramda "^0.25.0"
+    ramda "^0.26.1"
     rxjs "^6.3.3"
 
 supports-color@^2.0.0:
