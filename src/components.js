@@ -3,17 +3,15 @@ import { Component } from 'react-subx'
 import { Button, Select, Row, Col } from 'antd'
 
 import rc from './ringcentral'
-import config from './config'
 
 export class App extends Component {
   render () {
     const store = this.props.store
     if (!store.token) {
-      const authorizeUri = rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
-      return <a href={authorizeUri}>Log in</a>
+      return <a href={store.authorizeUri}>Log in</a>
     }
     return <div>
-      <Button style={{ float: 'right' }} onClick={e => rc.revoke()}>Log out</Button>
+      <Button style={{ float: 'right' }} onClick={e => store.logout()}>Log out</Button>
       {store.user ? <User store={store} /> : ''}
     </div>
   }

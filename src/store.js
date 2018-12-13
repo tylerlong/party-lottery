@@ -16,19 +16,27 @@ Cookies.set = (key, value, options) => {
 const token = Cookies.getJSON('RINGCENTRAL_TOKEN')
 
 const store = SubX.create({
-  token
+  token,
+  get authorizeUri () {
+    return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
+  },
+  async fetchUser () {
+    const r = await rc.get('/restapi/v1.0/account/~/extension/~')
+    this.user = r.data
+  },
+  async fetchTeams () {
+    const r = await rc.get('/restapi/v1.0/glip/groups', { params: { type: 'Team', recordCount: 250 } })
+    this.teams = r.data.records
+  },
+  async logout () {
+    await rc.revoke()
+  }
 })
 
 rc.token(token)
 if (token) {
-  (async () => {
-    const r = await rc.get('/restapi/v1.0/account/~/extension/~')
-    store.user = r.data
-  })()
-  ;(async () => {
-    const r = await rc.get('/restapi/v1.0/glip/groups', { params: { type: 'Team', recordCount: 250 } })
-    store.teams = r.data.records
-  })()
+  store.fetchUser()
+  store.fetchTeams()
 }
 rc.on('tokenChanged', async token => {
   const oldToken = store.token
