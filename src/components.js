@@ -43,9 +43,9 @@ class Team extends Component {
     const store = this.props.store
     return <>
       <h1>{store.team.name}</h1>
-      <Button disabled={store.choosing === true} onClick={e => store.chooseLuckyOne()}>Choose a lucky one</Button>
+      { store.members ? <Button disabled={store.choosing === true} onClick={e => store.chooseLuckyOne()}>Choose a lucky one</Button> : '' }
       <br /><br />
-      { store.choosing ? <h1><Spin size='large' /> Choosing...</h1> : '' }
+      { store.choosing ? <h1><Spin size='large' /> { store.tempOne.email }</h1> : '' }
       { store.luckyOne ? <LuckyOne store={store} /> : '' }
     </>
   }
@@ -55,6 +55,6 @@ class LuckyOne extends Component {
   render () {
     const store = this.props.store
     const luckyOne = store.luckyOne
-    return <h1>Congratulations <span>{ luckyOne.email } <br /> <img width='128' src={luckyOne.avatar} /></span></h1>
+    return <h1>Congratulations! <br /> { luckyOne.email } <br /> <img width='256' src={luckyOne.avatar} /></h1>
   }
 }

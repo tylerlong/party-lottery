@@ -37,7 +37,8 @@ const store = SubX.create({
   },
   async fetchMembers () {
     const ids = this.team.members
-    this.members = {}
+    delete this.members
+    const result = {}
     for (let i = 0; i < ids.length; i += 30) {
       let someIds = ids.slice(i, i + 30)
       if (someIds.length <= 1) {
@@ -45,9 +46,10 @@ const store = SubX.create({
       }
       const r = await rc.get(`/restapi/v1.0/glip/persons/${someIds.join(',')}`)
       for (const member of multipartMixedParser.parse(r.data).slice(1).filter(p => 'id' in p)) {
-        this.members[member.id] = member
+        result[member.id] = member
       }
     }
+    this.members = result
   },
   async selectTeam (id) {
     if (id === '-1') {
@@ -60,11 +62,20 @@ const store = SubX.create({
   async chooseLuckyOne () {
     delete this.luckyOne
     this.choosing = true
-    await delay(5000)
-    const luckyOneId = this.team.members[Math.floor(Math.random() * this.team.members.length)]
-    this.luckyOne = this.members[luckyOneId]
+    this.startIterate()
+    await delay(Math.floor(Math.random() * (10000 - 5000 + 1) + 5000))
+    this.luckyOne = this.tempOne
+    delete this.tempOne
     this.choosing = false
-    await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
+    // await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
+  },
+  async startIterate () {
+    while (this.choosing) {
+      for (const memberId of this.team.members) {
+        store.tempOne = this.members[memberId]
+        await delay(20)
+      }
+    }
   }
 })
 
