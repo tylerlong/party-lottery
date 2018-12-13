@@ -1,8 +1,11 @@
 import SubX from 'subx'
 import Cookies from 'js-cookie'
+import multipartMixedParser from 'multipart-mixed-parser'
+import RingCentral from 'ringcentral-js-concise'
 
-import rc from './ringcentral'
 import config from './config'
+
+const rc = new RingCentral(config.RINGCENTRAL_CLIENT_ID, config.RINGCENTRAL_CLIENT_SECRET, config.RINGCENTRAL_SERVER_URI)
 
 const setCookie = Cookies.set.bind(Cookies)
 Cookies.set = (key, value, options) => {
@@ -13,10 +16,7 @@ Cookies.set = (key, value, options) => {
   }
 }
 
-const token = Cookies.getJSON('RINGCENTRAL_TOKEN')
-
 const store = SubX.create({
-  token,
   get authorizeUri () {
     return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
   },
@@ -35,7 +35,18 @@ const store = SubX.create({
     await rc.post(`/restapi/v1.0/glip/groups/${teamId}/posts`, messageObj)
   },
   async fetchMembers () {
-    this.members = await rc.getGlipUsers(this.team.members)
+    const ids = this.team.members
+    this.members = {}
+    for (let i = 0; i < ids.length; i += 30) {
+      let someIds = ids.slice(i, i + 30)
+      if (someIds.length <= 1) {
+        someIds = [...someIds, ids[0]] // turn single record fetch to batch fetch
+      }
+      const r = await rc.get(`/restapi/v1.0/glip/persons/${someIds.join(',')}`)
+      for (const member of multipartMixedParser.parse(r.data).slice(1).filter(p => 'id' in p)) {
+        this.members[member.id] = member
+      }
+    }
   },
   async selectTeam (id) {
     if (id === '-1') {
@@ -52,26 +63,27 @@ const store = SubX.create({
   }
 })
 
-rc.token(token)
-if (token) {
-  store.fetchUser()
-  store.fetchTeams()
+// 3-legged oauth
+const urlParams = new URLSearchParams(window.location.search)
+const code = urlParams.get('code')
+if (code) {
+  rc.authorize({ code, redirectUri: config.APP_HOME_URI })
 }
+
+// save token
 rc.on('tokenChanged', async token => {
-  const oldToken = store.token
   store.token = token
   Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 7 })
-  if (!oldToken && token) {
+  if (code) { // first time login, remove query parameters
     window.location.replace(config.APP_HOME_URI)
   }
 })
 
-const urlParams = new URLSearchParams(window.location.search)
-const code = urlParams.get('code')
-if (code) {
-  (async () => {
-    await rc.authorize({ code, redirectUri: config.APP_HOME_URI })
-  })()
+// init
+rc.token(Cookies.getJSON('RINGCENTRAL_TOKEN'))
+if (store.token) {
+  store.fetchUser()
+  store.fetchTeams()
 }
 
 export default store

@@ -28,4 +28,3 @@ This app is pure client side, deploy it just like deploying any other static web
 
 - Preload memebers avatar image
 - Disallow clicking button too quickly
-- Load CSS manually? It might make building faster
