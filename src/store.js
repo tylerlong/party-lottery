@@ -32,14 +32,23 @@ const store = SubX.create({
     await rc.revoke()
   },
   async postMessage (teamId, messageObj) {
-    rc.post(`/restapi/v1.0/glip/groups/${teamId}/posts`, messageObj)
+    await rc.post(`/restapi/v1.0/glip/groups/${teamId}/posts`, messageObj)
   },
   async fetchMembers () {
     this.members = await rc.getGlipUsers(this.team.members)
   },
   async selectTeam (id) {
+    if (id === '-1') {
+      delete this.team
+      return
+    }
     this.team = this.teams.find(team => team.id === id)
     await this.fetchMembers()
+  },
+  async chooseLuckyOne () {
+    const luckyOneId = this.team.members[Math.floor(Math.random() * this.team.members.length)]
+    this.luckyOne = this.members[luckyOneId]
+    this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
   }
 })
 

@@ -29,13 +29,7 @@ class Teams extends Component {
   render () {
     const store = this.props.store
     return <div>
-      <Select style={{ width: 256 }} defaultValue='-1' onChange={value => {
-        if (value === '-1') {
-          delete store.team
-          return
-        }
-        store.selectTeam(value)
-      }}>
+      <Select style={{ width: 256 }} defaultValue='-1' onChange={value => store.selectTeam(value)}>
         <Select.Option key='-1' value='-1'>Please select a team</Select.Option>
         {store.teams.map(team => <Select.Option value={team.id} key={team.id}>{team.name}</Select.Option>)}
       </Select>
@@ -49,12 +43,7 @@ class Team extends Component {
     const store = this.props.store
     return <>
       <h1>{store.team.name}</h1>
-      <Button onClick={e => {
-        const team = store.teams.find(team => team.id === store.team.id)
-        const luckyOneId = team.members[Math.floor(Math.random() * team.members.length)]
-        store.luckyOne = luckyOneId
-        store.postMessage(team.id, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
-      }}>Choose a lucky one</Button>
+      <Button onClick={e => store.chooseLuckyOne()}>Choose a lucky one</Button>
       { store.luckyOne ? <LuckyOne store={store} /> : '' }
     </>
   }
@@ -63,9 +52,7 @@ class Team extends Component {
 class LuckyOne extends Component {
   render () {
     const store = this.props.store
-    const member = store.members[store.luckyOne]
-    return <h1>Congratulations { member
-      ? <span>{ member.email } <img width='128' src={member.avatar} /></span>
-      : store.luckyOne }</h1>
+    const luckyOne = store.luckyOne
+    return <h1>Congratulations <span>{ luckyOne.email } <br /> <img width='128' src={luckyOne.avatar} /></span></h1>
   }
 }
