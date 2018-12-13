@@ -60,11 +60,11 @@ const store = SubX.create({
   async chooseLuckyOne () {
     delete this.luckyOne
     this.choosing = true
-    await delay(3000)
+    await delay(5000)
     const luckyOneId = this.team.members[Math.floor(Math.random() * this.team.members.length)]
     this.luckyOne = this.members[luckyOneId]
-    await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
     this.choosing = false
+    await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
   }
 })
 
