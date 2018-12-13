@@ -30,6 +30,16 @@ const store = SubX.create({
   },
   async logout () {
     await rc.revoke()
+  },
+  async postMessage (teamId, messageObj) {
+    rc.post(`/restapi/v1.0/glip/groups/${teamId}/posts`, messageObj)
+  },
+  async fetchMembers () {
+    this.members = await rc.getGlipUsers(this.team.members)
+  },
+  async selectTeam (id) {
+    this.team = this.teams.find(team => team.id === id)
+    await this.fetchMembers()
   }
 })
 

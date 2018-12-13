@@ -2,8 +2,6 @@ import React from 'react'
 import { Component } from 'react-subx'
 import { Button, Select, Row, Col } from 'antd'
 
-import rc from './ringcentral'
-
 export class App extends Component {
   render () {
     const store = this.props.store
@@ -31,13 +29,12 @@ class Teams extends Component {
   render () {
     const store = this.props.store
     return <div>
-      <Select style={{ width: 256 }} defaultValue='-1' onChange={async value => {
+      <Select style={{ width: 256 }} defaultValue='-1' onChange={value => {
         if (value === '-1') {
           delete store.team
           return
         }
-        store.team = store.teams.find(team => team.id === value)
-        store.members = await rc.getGlipUsers(store.team.members)
+        store.selectTeam(value)
       }}>
         <Select.Option key='-1' value='-1'>Please select a team</Select.Option>
         {store.teams.map(team => <Select.Option value={team.id} key={team.id}>{team.name}</Select.Option>)}
@@ -56,7 +53,7 @@ class Team extends Component {
         const team = store.teams.find(team => team.id === store.team.id)
         const luckyOneId = team.members[Math.floor(Math.random() * team.members.length)]
         store.luckyOne = luckyOneId
-        rc.post(`/restapi/v1.0/glip/groups/${team.id}/posts`, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
+        store.postMessage(team.id, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
       }}>Choose a lucky one</Button>
       { store.luckyOne ? <LuckyOne store={store} /> : '' }
     </>
