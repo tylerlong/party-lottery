@@ -50,8 +50,16 @@ const store = SubX.create({
       }
     }
     this.members = result
+    // preload avatar images
+    Object.keys(this.members).forEach(key => {
+      const img = new global.Image()
+      if (this.members[key].avatar !== null) {
+        img.src = this.members[key].avatar
+      }
+    })
   },
   async selectTeam (id) {
+    delete this.luckyOne
     if (id === '-1') {
       delete this.team
       return
@@ -67,6 +75,7 @@ const store = SubX.create({
     this.luckyOne = this.tempOne
     delete this.tempOne
     this.choosing = false
+    // todo: uncomment line below before final release
     // await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
   },
   async startIterate () {
