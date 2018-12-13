@@ -55,6 +55,6 @@ class LuckyOne extends Component {
   render () {
     const store = this.props.store
     const luckyOne = store.luckyOne
-    return <h1>🎁🎁 Congratulations! 🎁🎁<br /> { luckyOne.email } <br /> <img width='384' src={luckyOne.avatar === null ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png' : luckyOne.avatar} /></h1>
+    return <h1>🎁🎁 Congratulations! 🎁🎁<br /> { luckyOne.email } <br /> <img width='512' src={luckyOne.avatar === null ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png' : luckyOne.avatar} /></h1>
   }
 }
