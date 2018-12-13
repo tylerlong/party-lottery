@@ -43,7 +43,7 @@ class Team extends Component {
     const store = this.props.store
     return <>
       <h1>{store.team.name}</h1>
-      <Button onClick={e => store.chooseLuckyOne()}>Choose a lucky one</Button>
+      <Button disabled={store.choosing === true} onClick={e => store.chooseLuckyOne()}>Choose a lucky one</Button>
       { store.luckyOne ? <LuckyOne store={store} /> : '' }
     </>
   }

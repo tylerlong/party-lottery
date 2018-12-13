@@ -2,6 +2,7 @@ import SubX from 'subx'
 import Cookies from 'js-cookie'
 import multipartMixedParser from 'multipart-mixed-parser'
 import RingCentral from 'ringcentral-js-concise'
+import delay from 'timeout-as-promise'
 
 import config from './config'
 
@@ -57,9 +58,13 @@ const store = SubX.create({
     await this.fetchMembers()
   },
   async chooseLuckyOne () {
+    delete this.luckyOne
+    this.choosing = true
+    await delay(3000)
     const luckyOneId = this.team.members[Math.floor(Math.random() * this.team.members.length)]
     this.luckyOne = this.members[luckyOneId]
-    this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
+    await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${luckyOneId}) ! :tada: :tada:` })
+    this.choosing = false
   }
 })
 
@@ -71,7 +76,7 @@ if (code) {
 }
 
 // save token
-rc.on('tokenChanged', async token => {
+rc.on('tokenChanged', token => {
   store.token = token
   Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 7 })
   if (code) { // first time login, remove query parameters
