@@ -18,6 +18,7 @@ Cookies.set = (key, value, options) => {
 }
 
 const store = SubX.create({
+  luckyOnes: {},
   get authorizeUri () {
     return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
   },
@@ -70,8 +71,17 @@ const store = SubX.create({
   async chooseLuckyOne () {
     if (this.choosing) {
       this.choosing = false
-      const items = store.team.members
-      this.luckyOne = store.members[items[Math.floor(Math.random() * items.length)]]
+      const items = this.team.members
+      let luckOneId = items[Math.floor(Math.random() * items.length)]
+      while (luckOneId in this.luckyOnes) {
+        luckOneId = items[Math.floor(Math.random() * items.length)]
+        if (Object.keys(this.luckyOnes).length === this.team.members.length) {
+          window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
+          this.luckyOnes = {}
+        }
+      }
+      this.luckyOnes[luckOneId] = true
+      this.luckyOne = this.members[luckOneId]
       // todo: uncomment line below before final release
       // await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
     } else {
@@ -83,11 +93,11 @@ const store = SubX.create({
   async startIterate () {
     while (this.choosing) {
       for (const memberId of this.team.members) {
-        store.tempOne = this.members[memberId]
+        this.tempOne = this.members[memberId]
         await delay(50)
       }
     }
-    delete store.tempOne
+    delete this.tempOne
   }
 })
 
