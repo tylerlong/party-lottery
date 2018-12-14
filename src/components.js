@@ -20,7 +20,7 @@ class User extends Component {
     const store = this.props.store
     return <>
       <span>{store.user.contact.email}</span>
-      <Row style={{ marginTop: '64px' }}><Col span={12} offset={6}>{ store.teams ? <Teams store={store} /> : <div><Spin size='large' /> Fetching Glip teams...</div> }</Col></Row>
+      { store.teams ? <Teams store={store} /> : <div><Spin size='large' /> Fetching Glip teams...</div> }
   </>
   }
 }
@@ -42,11 +42,12 @@ class Team extends Component {
   render () {
     const store = this.props.store
     return <>
-      <h1>{store.team.name}</h1>
-      { store.members ? <Button onClick={e => store.chooseLuckyOne()}>{store.choosing ? 'Stop' : 'Choose a lucky one'}</Button> : <div><Spin size='large' /> Fetching team members...</div> }
-      <br /><br />
-      { store.choosing ? <h1><Spin size='large' /> { store.tempOne.email }</h1> : '' }
-      { store.luckyOne ? <LuckyOne store={store} /> : '' }
+      <Row style={{ marginTop: '64px' }}><Col span={12} offset={6}>
+        { store.members ? <Button type={store.choosing ? 'danger' : 'primary'} block onClick={e => store.chooseLuckyOne()}>{store.choosing ? 'Stop' : 'Choose a lucky one'}</Button> : <div><Spin size='large' /> Fetching team members...</div> }
+        <br /><br />
+        { store.choosing ? <h1><Spin size='large' /> { store.tempOne.email }</h1> : '' }
+        { store.luckyOne ? <LuckyOne store={store} /> : '' }
+      </Col></Row>
     </>
   }
 }
