@@ -10,7 +10,7 @@ export class App extends Component {
     }
     return <div>
       <Button style={{ float: 'right' }} onClick={e => store.logout()}>Log out</Button>
-      {store.user ? <User store={store} /> : ''}
+      {store.user ? <User store={store} /> : <div><Spin size='large' /> Fetching user data...</div>}
     </div>
   }
 }
@@ -20,7 +20,7 @@ class User extends Component {
     const store = this.props.store
     return <>
       <span>{store.user.contact.email}</span>
-      <Row style={{ marginTop: '64px' }}><Col span={12} offset={6}>{ store.teams ? <Teams store={store} /> : '' }</Col></Row>
+      <Row style={{ marginTop: '64px' }}><Col span={12} offset={6}>{ store.teams ? <Teams store={store} /> : <div><Spin size='large' /> Fetching Glip teams...</div> }</Col></Row>
   </>
   }
 }
@@ -43,7 +43,7 @@ class Team extends Component {
     const store = this.props.store
     return <>
       <h1>{store.team.name}</h1>
-      { store.members ? <Button disabled={store.choosing === true} onClick={e => store.chooseLuckyOne()}>Choose a lucky one</Button> : '' }
+      { store.members ? <Button disabled={store.choosing === true} onClick={e => store.chooseLuckyOne()}>Choose a lucky one</Button> : <div><Spin size='large' /> Fetching team members...</div> }
       <br /><br />
       { store.choosing ? <h1><Spin size='large' /> { store.tempOne.email }</h1> : '' }
       { store.luckyOne ? <LuckyOne store={store} /> : '' }
