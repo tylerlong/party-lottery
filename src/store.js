@@ -82,8 +82,7 @@ const store = SubX.create({
       }
       this.luckyOnes[luckOneId] = true
       this.luckyOne = this.members[luckOneId]
-      // todo: uncomment line below before final release
-      // await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
+      await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
     } else {
       delete this.luckyOne
       this.choosing = true
