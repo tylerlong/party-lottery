@@ -68,23 +68,26 @@ const store = SubX.create({
     await this.fetchMembers()
   },
   async chooseLuckyOne () {
-    delete this.luckyOne
-    this.choosing = true
-    this.startIterate()
-    await delay(Math.floor(Math.random() * (10000 - 5000 + 1) + 5000))
-    this.luckyOne = this.tempOne
-    delete this.tempOne
-    this.choosing = false
-    // todo: uncomment line below before final release
-    // await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
+    if (this.choosing) {
+      this.choosing = false
+      const items = store.team.members
+      this.luckyOne = store.members[items[Math.floor(Math.random() * items.length)]]
+      // todo: uncomment line below before final release
+      // await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
+    } else {
+      delete this.luckyOne
+      this.choosing = true
+      this.startIterate()
+    }
   },
   async startIterate () {
     while (this.choosing) {
       for (const memberId of this.team.members) {
         store.tempOne = this.members[memberId]
-        await delay(10)
+        await delay(50)
       }
     }
+    delete store.tempOne
   }
 })
 
