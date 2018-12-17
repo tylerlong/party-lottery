@@ -1,6 +1,5 @@
 import SubX from 'subx'
 import Cookies from 'js-cookie'
-import multipartMixedParser from 'multipart-mixed-parser'
 import RingCentral from 'ringcentral-js-concise'
 import delay from 'timeout-as-promise'
 
@@ -37,20 +36,12 @@ const store = SubX.create({
     await rc.post(`/restapi/v1.0/glip/groups/${teamId}/posts`, messageObj)
   },
   async fetchMembers () {
-    const ids = this.team.members
     delete this.members
-    const result = {}
-    for (let i = 0; i < ids.length; i += 30) {
-      let someIds = ids.slice(i, i + 30)
-      if (someIds.length <= 1) {
-        someIds = [...someIds, ids[0]] // turn single record fetch to batch fetch
-      }
-      const r = await rc.get(`/restapi/v1.0/glip/persons/${someIds.join(',')}`)
-      for (const member of multipartMixedParser.parse(r.data).slice(1).filter(p => 'id' in p)) {
-        result[member.id] = member
-      }
+    const members = await rc.batchGet('/restapi/v1.0/glip/persons', this.team.members, 30)
+    this.members = {}
+    for (const member of members) {
+      this.members[member.id] = member
     }
-    this.members = result
     // preload avatar images
     Object.keys(this.members).forEach(key => {
       const img = new global.Image()
