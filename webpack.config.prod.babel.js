@@ -1,4 +1,12 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import { LoaderOptionsPlugin } from 'webpack'
+const stylusSettingPlugin =  new LoaderOptionsPlugin({
+  test: /\.styl$/,
+  stylus: {
+    preferPathResolver: 'webpack'
+  },
+  'resolve url': false
+})
 import { join } from 'path'
 
 const config = {
@@ -17,6 +25,18 @@ const config = {
         ]
       },
       {
+        test: /\.styl$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpg|svg)$/,
+        use: ['url-loader?limit=1&name=images/[name].[ext]']
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader'
       }
@@ -24,6 +44,7 @@ const config = {
   },
   devtool: 'source-map',
   plugins: [
+    stylusSettingPlugin,
     new HtmlWebpackPlugin({
       template: './src/index.html'
     })
