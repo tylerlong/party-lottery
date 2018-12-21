@@ -1,5 +1,12 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import { HotModuleReplacementPlugin } from 'webpack'
+import { HotModuleReplacementPlugin, LoaderOptionsPlugin } from 'webpack'
+const stylusSettingPlugin =  new LoaderOptionsPlugin({
+  test: /\.styl$/,
+  stylus: {
+    preferPathResolver: 'webpack'
+  },
+  'resolve url': false
+})
 
 const config = {
   mode: 'development',
@@ -14,8 +21,20 @@ const config = {
         ]
       },
       {
+        test: /\.styl$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpg|svg)$/,
+        use: ['url-loader?limit=1&name=images/[name].[ext]']
+      },
+      {
         test: /\.js$/,
-        loader: 'babel-loader'
+        loader: 'babel-loader?cacheDirectory'
       }
     ]
   },
@@ -33,6 +52,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
+    stylusSettingPlugin,
     new HotModuleReplacementPlugin()
   ]
 }
