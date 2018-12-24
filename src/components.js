@@ -61,7 +61,7 @@ export class App extends Component {
               : null
           }
           <div className="fright">
-            <span>
+            <span onClick={store.logout} className="pointer">
               <Icon type="logout" /> Log out
             </span>
           </div>
@@ -97,22 +97,26 @@ class User extends Component {
 class Teams extends Component {
   render () {
     const {store} = this.props
-    return <div>
-      <Select
-        defaultValue='-1'
-        onChange={value => store.selectTeam(value)}
-      >
-        <Select.Option key='-1' value='-1'>Please select a team</Select.Option>
+    return (
+      <div className="relative">
+        <div className={store.team ? 'team-selected' : ''}>
+          <Select
+            defaultValue='-1'
+            onChange={value => store.selectTeam(value)}
+          >
+            <Select.Option key='-1' value='-1'>Please select a team</Select.Option>
+            {
+              store.teams.map(
+                team => <Select.Option value={team.id} key={team.id}>{team.name}</Select.Option>
+              )
+            }
+          </Select>
+        </div>
         {
-          store.teams.map(
-            team => <Select.Option value={team.id} key={team.id}>{team.name}</Select.Option>
-          )
+          store.team ? <Team store={store} /> : ''
         }
-      </Select>
-      {
-        store.team ? <Team store={store} /> : ''
-      }
-    </div>
+      </div>
+    )
   }
 }
 
@@ -120,7 +124,7 @@ class Team extends Component {
   render () {
     const {store} = this.props
     return (
-      <div className="team aligncenter pd3t pd2b">
+      <div className="team aligncenter pd1b">
         {
           store.members
             ? (
@@ -159,11 +163,11 @@ class LuckyOne extends Component {
           <div className="cong">
             🎁🎁 Congratulations! 🎁🎁
           </div>
-          <div className="email">
+          <div className="email animated tada">
             { luckyOne.email }
           </div>
           <img
-            className="iblock mg2y"
+            className="iblock mg2y animated jackInTheBox"
             width='400'
             src={
               luckyOne.avatar === null
