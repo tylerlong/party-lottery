@@ -2,11 +2,13 @@ import SubX from 'subx'
 import Cookies from 'js-cookie'
 import RingCentral from 'ringcentral-js-concise'
 import delay from 'timeout-as-promise'
+import { fromEvent } from 'rxjs'
+import { debounceTime } from 'rxjs/operators'
 
 import config from './config'
 
 const rc = new RingCentral(config.RINGCENTRAL_CLIENT_ID, config.RINGCENTRAL_CLIENT_SECRET, config.RINGCENTRAL_SERVER_URI)
-
+const pagePadding = 242
 const setCookie = Cookies.set.bind(Cookies)
 Cookies.set = (key, value, options) => {
   if (value === undefined) {
@@ -18,6 +20,7 @@ Cookies.set = (key, value, options) => {
 
 const store = SubX.create({
   luckyOnes: {},
+  avatarSize: window.innerHeight - pagePadding,
   get authorizeUri () {
     return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
   },
@@ -114,4 +117,9 @@ if (store.token) {
   store.fetchTeams()
 }
 
+fromEvent(window, 'resize')
+  .pipe(debounceTime(1000))
+  .subscribe(() => {
+    store.avatarSize = window.innerHeight - pagePadding
+  })
 export default store

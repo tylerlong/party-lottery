@@ -154,7 +154,7 @@ class Team extends Component {
 class LuckyOne extends Component {
   render () {
     const { store } = this.props
-    const luckyOne = store.luckyOne
+    const { luckyOne, avatarSize } = store
     return (
       <div className='pd2 lucky-result'>
         <h1>
@@ -163,7 +163,8 @@ class LuckyOne extends Component {
           </div>
           <img
             className='iblock mg2y animated jackInTheBox'
-            height={window.innerHeight - 242}
+            height={avatarSize}
+            width={avatarSize}
             src={
               luckyOne.avatar === null
                 ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
