@@ -3,70 +3,68 @@ import { Component } from 'react-subx'
 import { Button, Select, Spin, Icon } from 'antd'
 
 export class App extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.initBg()
     document.getElementById('content-loading').remove()
   }
 
-  initBg() {
+  initBg () {
     // instantiate a loader
-    let loader = new THREE.TextureLoader()
+    let loader = new window.THREE.TextureLoader()
     let Universe = window.Universe.default
     // load a resource
     loader.load(
       // resource URL
       '//unpkg.com/universe-bg/dist/star.png',
       // Function when resource is loaded
-      function ( texture ) {
-        let uni = new Universe({
-          size: 9 //star size
-          ,id: null //id
-          ,starNumber: 10000
-          ,color: 0xffffff
-          ,width: null
-          ,height: null
-          ,container: document.getElementById('ubg')
-          ,map: texture
+      function (texture) {
+        return new Universe({
+          size: 9, // star size
+          id: null, // id
+          starNumber: 10000,
+          color: 0xffffff,
+          width: null,
+          height: null,
+          container: document.getElementById('ubg'),
+          map: texture
         })
-
       }
     )
   }
 
   render () {
-    const {store} = this.props
+    const { store } = this.props
     if (!store.token) {
       return (
-        <div className="main aligncenter login-page">
-          <div className="logo">
-            <img src={require('./rc128.png')} alt="RingCentral" />
+        <div className='main aligncenter login-page'>
+          <div className='logo'>
+            <img src={require('./rc128.png')} alt='RingCentral' />
           </div>
           <a href={store.authorizeUri}>
-            <Button type="primary" size="large">Login to Party Lottery System</Button>
+            <Button type='primary' size='large'>Login to Party Lottery System</Button>
           </a>
         </div>
       )
-
     }
     return (
-      <div className="main-logined">
-        <div className="fix pd2 header">
+      <div className='main-logined'>
+        <div className='fix pd2 header'>
           {
             store.user
               ? (
-                <div className="fleft">
-                  <Icon type="user" /> {store.user.contact.email}
+                <div className='fleft'>
+                  <Icon type='user' /> {store.user.contact.email}
                 </div>
               )
               : null
           }
-          <div className="fright">
-            <span onClick={store.logout} className="pointer">
-              <Icon type="logout" /> Log out
+          <div className='fright'>
+            <span onClick={store.logout} className='pointer'>
+              <Icon type='logout' /> Log out
             </span>
           </div>
         </div>
-        <div className="main-logined aligncenter">
+        <div className='main-logined aligncenter'>
           {
             store.user
               ? <User store={store} />
@@ -81,9 +79,9 @@ export class App extends Component {
 
 class User extends Component {
   render () {
-    const {store} = this.props
+    const { store } = this.props
     return (
-      <div className="pd2 aligncenter">
+      <div className='pd2 aligncenter'>
         {
           store.teams
             ? <Teams store={store} />
@@ -96,9 +94,9 @@ class User extends Component {
 
 class Teams extends Component {
   render () {
-    const {store} = this.props
+    const { store } = this.props
     return (
-      <div className="relative">
+      <div className='relative'>
         <div className={store.team ? 'team-selected' : ''}>
           <Select
             defaultValue='-1'
@@ -122,9 +120,9 @@ class Teams extends Component {
 
 class Team extends Component {
   render () {
-    const {store} = this.props
+    const { store } = this.props
     return (
-      <div className="team aligncenter pd1b">
+      <div className='team aligncenter pd1b'>
         {
           store.members
             ? (
@@ -140,7 +138,7 @@ class Team extends Component {
         }
         {
           store.choosing
-            ? <h1 className="pd2"><Spin size='large' /> { store.tempOne.email }</h1>
+            ? <h1 className='pd2'><Spin size='large' /> { store.tempOne.email }</h1>
             : null
         }
         {
@@ -155,20 +153,17 @@ class Team extends Component {
 
 class LuckyOne extends Component {
   render () {
-    const {store} = this.props
+    const { store } = this.props
     const luckyOne = store.luckyOne
     return (
-      <div className="pd2 lucky-result">
+      <div className='pd2 lucky-result'>
         <h1>
-          <div className="cong">
-            🎁🎁 Congratulations! 🎁🎁
-          </div>
-          <div className="email animated tada">
-            { luckyOne.email }
+          <div className='email animated tada'>
+            🎁 { luckyOne.email } 🎁
           </div>
           <img
-            className="iblock mg2y animated jackInTheBox"
-            width='400'
+            className='iblock mg2y animated jackInTheBox'
+            height={window.innerHeight - 242}
             src={
               luckyOne.avatar === null
                 ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
