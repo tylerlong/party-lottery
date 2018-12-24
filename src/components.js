@@ -162,7 +162,7 @@ class LuckyOne extends Component {
             🎁 { luckyOne.email } 🎁
           </div>
           <img
-            className='iblock mg2y animated jackInTheBox'
+            className='iblock mg2y animated jackInTheBox luck-avatar'
             height={avatarSize}
             width={avatarSize}
             src={

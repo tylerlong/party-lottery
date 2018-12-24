@@ -9,6 +9,7 @@ import config from './config'
 
 const rc = new RingCentral(config.RINGCENTRAL_CLIENT_ID, config.RINGCENTRAL_CLIENT_SECRET, config.RINGCENTRAL_SERVER_URI)
 const pagePadding = 242
+const maxAvatarSize = 512
 const setCookie = Cookies.set.bind(Cookies)
 Cookies.set = (key, value, options) => {
   if (value === undefined) {
@@ -18,9 +19,16 @@ Cookies.set = (key, value, options) => {
   }
 }
 
+function resize () {
+  let size = window.innerHeight - pagePadding
+  return size > maxAvatarSize
+    ? maxAvatarSize
+    : size
+}
+
 const store = SubX.create({
   luckyOnes: {},
-  avatarSize: window.innerHeight - pagePadding,
+  avatarSize: resize(),
   get authorizeUri () {
     return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
   },
@@ -120,6 +128,6 @@ if (store.token) {
 fromEvent(window, 'resize')
   .pipe(debounceTime(1000))
   .subscribe(() => {
-    store.avatarSize = window.innerHeight - pagePadding
+    store.avatarSize = resize()
   })
 export default store
