@@ -7,7 +7,7 @@ export default class App extends Component {
 
   initBg () {
     window.particleBg('#pbg', {
-      color: '#999'
+      color: '#777'
     })
   }
 
