@@ -29,6 +29,8 @@ function resize () {
 const store = SubX.create({
   luckyOnes: {},
   avatarSize: resize(),
+  bg: 'particle',
+  bgs: ['particle', 'universe'],
   get authorizeUri () {
     return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
   },
