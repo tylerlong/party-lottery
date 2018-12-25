@@ -1,5 +1,5 @@
 import { Component } from 'react-subx'
-import { Button, Spin } from 'antd'
+import { Button, Spin, Icon } from 'antd'
 import LuckyOne from './lucky-one'
 import React from 'react'
 
@@ -12,11 +12,16 @@ export default class Team extends Component {
           store.members
             ? (
               <Button
-                type={store.choosing ? 'danger' : 'primary'}
+                type='primary'
                 size='large'
+                className='christmas'
                 onClick={e => store.chooseLuckyOne()}
               >
-                {store.choosing ? 'Stop' : 'Choose a lucky one'}
+                {
+                  store.choosing
+                    ? <span><Icon type='stop' theme='filled' /> Stop</span>
+                    : <span><Icon type='heart' /> Choose a lucky one</span>
+                }
               </Button>
             )
             : <div><Spin size='large' /> Fetching team members...</div>
