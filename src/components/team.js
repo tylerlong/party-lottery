@@ -15,12 +15,12 @@ export default class Team extends Component {
                 type='primary'
                 size='large'
                 className='christmas'
-                onClick={e => store.chooseLuckyOne()}
+                onClick={e => store.chooseLsuckyOne()}
               >
                 {
                   store.choosing
                     ? <span><Icon type='stop' theme='filled' /> Stop</span>
-                    : <span><Icon type='heart' /> Choose a lucky one</span>
+                    : <span><Icon type='heart' /> Choose lucky ones</span>
                 }
               </Button>
             )
