@@ -26,31 +26,37 @@ function resize () {
     : size
 }
 
+function delay (ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
+
 const store = SubX.create({
   luckyOnes: {},
   prizeLevels: [
     {
-      level: 3,
+      level: '3',
       count: 20
     },
     {
-      level: 2,
+      level: '2',
       count: 10
     },
     {
-      level: 1,
+      level: '1',
       count: 2
-    },
+    }
   ],
   prizeLevel: 3,
   prizeCount: 20,
   avatarSize: resize(),
   bg: 'particle',
   bgs: ['particle', 'universe'],
-  onChangeLevel(v) {
+  onChangeLevel (v) {
     this.prizeLevel = parseInt(v, 10)
   },
-  onChangeCount(v) {
+  onChangeCount (v) {
     this.prizeLevel = parseInt(v, 10)
   },
   get authorizeUri () {
@@ -95,41 +101,37 @@ const store = SubX.create({
     await this.fetchMembers()
   },
   async chooseLuckyOne () {
-    if (this.choosing) {
-      this.choosing = false
-      const items = this.team.members
-      let luckOneId = items[Math.floor(Math.random() * items.length)]
-      while (luckOneId in this.luckyOnes) {
-        luckOneId = items[Math.floor(Math.random() * items.length)]
-        if (Object.keys(this.luckyOnes).length === this.team.members.length) {
-          window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
-          this.luckyOnes = {}
-        }
+    this.choosing = false
+    const items = Object.values(this.team.members)
+    let luckOne = items[Math.floor(Math.random() * items.length)]
+    let luckOneId = luckOne.id
+    while (luckOneId in this.luckyOnes) {
+      luckOneId = items[Math.floor(Math.random() * items.length)]
+      if (Object.keys(this.luckyOnes).length === this.team.members.length) {
+        window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
+        this.luckyOnes = {}
       }
-      this.luckyOnes[luckOneId] = true
-      this.luckyOne = this.members[luckOneId]
-      await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
-    } else {
-      delete this.luckyOne
-      this.choosing = true
-      this.startIterate()
     }
+    this.luckyOnes[luckOneId] = {
+      ...luckOne,
+      prizeLevel: this.prizeLevel
+    }
+    this.luckyOne = luckOne
+    let { prizeLevel } = this
+    await this.postMessage(
+      this.team.id,
+      {
+        text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) wins Prize ${prizeLevel} ! :tada: :tada:`
+      }
+    )
   },
   async chooseLuckyOnes () {
     if (this.choosing) {
-      this.choosing = false
-      const items = this.team.members
-      let luckOneId = items[Math.floor(Math.random() * items.length)]
-      while (luckOneId in this.luckyOnes) {
-        luckOneId = items[Math.floor(Math.random() * items.length)]
-        if (Object.keys(this.luckyOnes).length === this.team.members.length) {
-          window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
-          this.luckyOnes = {}
-        }
+      let { prizeCount } = this
+      for (let i = 0; i < prizeCount; i++) {
+        await this.chooseLuckyOne()
+        await delay(3000)
       }
-      this.luckyOnes[luckOneId] = true
-      this.luckyOne = this.members[luckOneId]
-      await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
     } else {
       delete this.luckyOne
       this.choosing = true
