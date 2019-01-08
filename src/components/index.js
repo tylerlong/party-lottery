@@ -5,7 +5,7 @@ import User from './user'
 import BgSelect from './bg-select'
 import ParticleBg from './bg-particle'
 import UniverseBg from './bg-universe'
-import LuckOnes from './luck-ones'
+import LuckOnes from './lucky-ones'
 
 export default class App extends Component {
   componentDidMount () {
