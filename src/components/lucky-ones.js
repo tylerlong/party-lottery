@@ -8,9 +8,9 @@ import { Button } from 'antd'
 import download from './download'
 import time from './time'
 
-function renderLuckOne (luckyOne) {
+function renderLuckOne (luckyOne, i) {
   return (
-    <div className='person' key={luckyOne.email}>
+    <div className='person' key={luckyOne.email + '__' + i}>
       <div className='email animated tada'>
         { luckyOne.name } 🎁{ luckyOne.prizeLevel }🎁
       </div>

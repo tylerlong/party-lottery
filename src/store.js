@@ -45,13 +45,15 @@ const store = SubX.create({
   prizeLevel: 3,
   prizeCount: 20,
   avatarSize: resize(),
-  bg: 'particle',
-  bgs: ['particle', 'universe'],
+  bg: 'newyear',
+  bgs: ['newyear', 'particle', 'universe'],
   onChangeLevel (v) {
     this.prizeLevel = parseInt(v, 10)
+    let obj = this.prizeLevels.find(r => r.level === v)
+    this.prizeCount = obj.count
   },
   onChangeCount (v) {
-    this.prizeLevel = parseInt(v, 10)
+    this.prizeCount = parseInt(v, 10)
   },
   get authorizeUri () {
     return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
@@ -95,17 +97,16 @@ const store = SubX.create({
     await this.fetchMembers()
   },
   async chooseLuckyOne () {
-    this.choosing = false
     const items = Object.values(this.team.members)
     let luckOne = items[Math.floor(Math.random() * items.length)]
     let luckOneId = luckOne.id
-    while (luckOneId in this.luckyOnes) {
-      luckOneId = items[Math.floor(Math.random() * items.length)]
-      if (Object.keys(this.luckyOnes).length === this.team.members.length) {
-        window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
-        this.luckyOnes = {}
-      }
-    }
+    // while (luckOneId in this.luckyOnes) {
+    //   luckOneId = items[Math.floor(Math.random() * items.length)]
+    //   if (Object.keys(this.luckyOnes).length === this.team.members.length) {
+    //     window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
+    //     this.luckyOnes = {}
+    //   }
+    // }
     this.luckyOnes[luckOneId] = {
       ...luckOne,
       prizeLevel: this.prizeLevel
