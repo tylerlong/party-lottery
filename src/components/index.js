@@ -7,7 +7,7 @@ import ParticleBg from './bg-particle'
 import UniverseBg from './bg-universe'
 import NewYearBg from './bg-new-year'
 import LuckOnes from './lucky-ones'
-import bgm from './bgm'
+import Bgm from './bgm'
 
 export default class App extends Component {
   componentDidMount () {
@@ -79,7 +79,7 @@ export default class App extends Component {
     return (
       <div>
         {this.renderBg()}
-        {bgm()}
+        <Bgm />
         {
           store.token
             ? this.renderLogined()
