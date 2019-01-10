@@ -105,7 +105,7 @@ const store = SubX.create({
   async chooseLuckyOne () {
     const items = this.team.members
     if (Object.keys(this.luckyOnes).length === this.team.members.length) {
-      window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
+      window.alert('Every one has received gifts!')
       return
     }
     let luckOneId = items[Math.floor(Math.random() * items.length)]
