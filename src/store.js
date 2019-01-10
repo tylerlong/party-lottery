@@ -4,6 +4,7 @@ import RingCentral from 'ringcentral-js-concise'
 import delay from 'timeout-as-promise'
 import { fromEvent } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
+import copy from 'json-deep-copy'
 
 import config from './config'
 
@@ -104,9 +105,11 @@ const store = SubX.create({
   async chooseLuckyOne () {
     const items = this.team.members
     let luckOneId = items[Math.floor(Math.random() * items.length)]
-    let luckyOne = this.members[luckOneId]
+    let luckyOne = copy(this.members[luckOneId])
+
     while (luckOneId in this.luckyOnes) {
       luckOneId = items[Math.floor(Math.random() * items.length)]
+      luckyOne = copy(this.members[luckOneId])
       if (Object.keys(this.luckyOnes).length === this.team.members.length) {
         window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
         return
