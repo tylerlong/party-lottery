@@ -135,7 +135,9 @@ const store = SubX.create({
       let { prizeCount } = this
       for (let i = 0; i < prizeCount; i++) {
         await this.chooseLuckyOne()
-        await delay(3000)
+        if (i < prizeCount - 1) {
+          await delay(3000)
+        }
       }
       this.choosing = false
     } else {
