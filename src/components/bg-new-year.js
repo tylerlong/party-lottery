@@ -1,21 +1,20 @@
 /**
  * bg component: new year
+ * from https://codepen.io/whqet/pen/Auzch
  */
 
 import React, { Component } from 'react'
+import loop from './fireworks'
 
 export default class App extends Component {
   componentDidMount () {
-    this.initBg()
-  }
-
-  initBg () {
-
+    loop()
   }
 
   render () {
     return (
       <div id='nbg'>
+        <canvas id='nbg-inner' />
         <img className='cracker' src={require('../images/crack.png')} />
         <img className='cracker mirror' src={require('../images/crack.png')} />
       </div>

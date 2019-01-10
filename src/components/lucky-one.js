@@ -10,7 +10,7 @@ export default class LuckyOne extends Component {
       <div className='pd2 lucky-result'>
         <h1>
           <div className='email animated tada'>
-            🎁 { luckyOne.email } 🎁
+            🎁 {luckyOne.firstName} {luckyOne.lastName} <br /> ({luckyOne.email})🎁
           </div>
           <img
             className='iblock mg2y animated jackInTheBox luck-avatar'

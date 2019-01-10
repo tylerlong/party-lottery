@@ -11,9 +11,6 @@ import time from './time'
 function renderLuckOne (luckyOne, i) {
   return (
     <div className='person' key={luckyOne.email + '__' + i}>
-      <div className='person-name'>
-        { luckyOne.name }({ luckyOne.email }) 🎁{ luckyOne.prizeLevel }🎁
-      </div>
       <img
         className='iblock mg2y animated jackInTheBox luck-avatar'
         height={40}
@@ -30,10 +27,10 @@ function renderLuckOne (luckyOne, i) {
 
 function buildCsv (ones) {
   return ones.reduce((prev, curr, i) => {
-    let { email, name, prizeLevel } = curr
+    let { email, firstName, lastName, prizeLevel } = curr
     return prev +
-    `"${i + 1}","${name}","${email}","${prizeLevel}"\n`
-  }, '')
+    `"${i + 1}","${firstName} ${lastName}","${email}","${prizeLevel}"\n`
+  }, 'index,name,email,prizeLevel\n')
 }
 
 function downloadCsv (ones) {
@@ -45,7 +42,7 @@ export default class LuckyOnes extends Component {
   render () {
     const { store } = this.props
     const { luckyOnes } = store
-    let values = Object.values(luckyOnes)
+    let values = Object.values(luckyOnes).reverse()
     if (!values.length) {
       return null
     }
@@ -53,7 +50,7 @@ export default class LuckyOnes extends Component {
       <div className='luckyones'>
         <div className='btn-wrap'>
           <Button
-            type='ghost'
+            type='default'
             onClick={() => downloadCsv(values)}
           >
             Download csv

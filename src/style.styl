@@ -7,6 +7,7 @@ h4
 #ubg
 #pbg
 #nbg
+#nbg-inner
 #container
 #content-loading
   position fixed
@@ -29,6 +30,8 @@ h4
   background-size 100%
   background-image url('images/bg1.png')
   background-size cover
+#nbg-inner
+  background none
 #container
   z-index 1
 #content-loading
@@ -57,7 +60,7 @@ h4
 .lucky-result
   font-size 40px
 .email
-  font-size 50px
+  font-size 34px
   color #fff
 .team-selected
   opacity .7
@@ -74,17 +77,20 @@ h4
   &:hover
     right 0
 .luckyones
-  position absolute
+  position fixed
   bottom 3px
   left 10px
   z-index 200
+  right 10px
+  height 90px
 .person
   display inline-block
   vertical-align middle
   margin-right 5px
   margin-bottom 5px
   text-align center
-  width 60px
+  width 40px
+  height 40px
 
 for $i, $index in 5 16 32
   

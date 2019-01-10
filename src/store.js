@@ -8,7 +8,7 @@ import { debounceTime } from 'rxjs/operators'
 import config from './config'
 
 const rc = new RingCentral(config.RINGCENTRAL_CLIENT_ID, config.RINGCENTRAL_CLIENT_SECRET, config.RINGCENTRAL_SERVER_URI)
-const pagePadding = 242
+const pagePadding = 322
 const maxAvatarSize = 512
 const setCookie = Cookies.set.bind(Cookies)
 Cookies.set = (key, value, options) => {
