@@ -11,8 +11,8 @@ import time from './time'
 function renderLuckOne (luckyOne, i) {
   return (
     <div className='person' key={luckyOne.email + '__' + i}>
-      <div className='email animated tada'>
-        { luckyOne.name } 🎁{ luckyOne.prizeLevel }🎁
+      <div className='person-name'>
+        { luckyOne.name }({ luckyOne.email }) 🎁{ luckyOne.prizeLevel }🎁
       </div>
       <img
         className='iblock mg2y animated jackInTheBox luck-avatar'

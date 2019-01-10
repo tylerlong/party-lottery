@@ -42,21 +42,26 @@ const store = SubX.create({
       count: 2
     }
   ],
-  prizeLevel: 3,
+  prizeLevel: '3',
   prizeCount: 20,
   avatarSize: resize(),
   bg: 'newyear',
   bgs: ['newyear', 'particle', 'universe'],
+  looping: false,
   onChangeLevel (v) {
-    this.prizeLevel = parseInt(v, 10)
-    let obj = this.prizeLevels.find(r => r.level === v)
-    this.prizeCount = obj.count
+    store.prizeLevel = v
+    let obj = store.prizeLevels.find(
+      r => r.level === v
+    )
+    store.prizeCount = obj.count
   },
   onChangeCount (v) {
-    this.prizeCount = parseInt(v, 10)
+    store.prizeCount = parseInt(v, 10)
   },
   get authorizeUri () {
-    return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
+    return rc.authorizeUri(
+      config.APP_HOME_URI, { responseType: 'code' }
+    )
   },
   async fetchUser () {
     const r = await rc.get('/restapi/v1.0/account/~/extension/~')
@@ -97,9 +102,9 @@ const store = SubX.create({
     await this.fetchMembers()
   },
   async chooseLuckyOne () {
-    const items = Object.values(this.team.members)
-    let luckOne = items[Math.floor(Math.random() * items.length)]
-    let luckOneId = luckOne.id
+    const items = this.team.members
+    let luckOneId = items[Math.floor(Math.random() * items.length)]
+    let luckyOne = this.members[luckOneId]
     // while (luckOneId in this.luckyOnes) {
     //   luckOneId = items[Math.floor(Math.random() * items.length)]
     //   if (Object.keys(this.luckyOnes).length === this.team.members.length) {
@@ -108,10 +113,10 @@ const store = SubX.create({
     //   }
     // }
     this.luckyOnes[luckOneId] = {
-      ...luckOne,
+      ...luckyOne,
       prizeLevel: this.prizeLevel
     }
-    this.luckyOne = luckOne
+    this.luckyOne = luckyOne
     let { prizeLevel } = this
     await this.postMessage(
       this.team.id,
@@ -121,20 +126,23 @@ const store = SubX.create({
     )
   },
   async chooseLuckyOnes () {
-    if (this.choosing) {
+    if (this.looping) {
+      this.looping = false
+      this.choosing = true
       let { prizeCount } = this
       for (let i = 0; i < prizeCount; i++) {
         await this.chooseLuckyOne()
         await delay(3000)
       }
+      this.choosing = false
     } else {
       delete this.luckyOne
-      this.choosing = true
+      this.looping = true
       this.startIterate()
     }
   },
   async startIterate () {
-    while (this.choosing) {
+    while (this.looping) {
       for (const memberId of this.team.members) {
         this.tempOne = this.members[memberId]
         await delay(50)
