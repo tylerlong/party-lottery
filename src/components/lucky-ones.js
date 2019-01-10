@@ -42,7 +42,7 @@ export default class LuckyOnes extends Component {
   render () {
     const { store } = this.props
     const { luckyOnes } = store
-    let values = Object.values(luckyOnes).reverse()
+    let values = Object.values(luckyOnes)
     if (!values.length) {
       return null
     }
