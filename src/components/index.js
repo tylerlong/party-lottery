@@ -5,6 +5,9 @@ import User from './user'
 import BgSelect from './bg-select'
 import ParticleBg from './bg-particle'
 import UniverseBg from './bg-universe'
+import NewYearBg from './bg-new-year'
+import LuckOnes from './lucky-ones'
+import Bgm from './bgm'
 
 export default class App extends Component {
   componentDidMount () {
@@ -39,6 +42,7 @@ export default class App extends Component {
               : <div><Spin size='large' /> Fetching user data...</div>
           }
         </div>
+        <LuckOnes store={store} />
       </div>
     )
   }
@@ -48,7 +52,7 @@ export default class App extends Component {
     return (
       <div className='main aligncenter login-page'>
         <div className='logo'>
-          <img src={require('../rc128.png')} alt='RingCentral' />
+          <img src={require('../images/rc128.png')} alt='RingCentral' />
         </div>
         <a href={store.authorizeUri}>
           <Button type='primary' size='large'>Login to Party Lottery System</Button>
@@ -65,6 +69,8 @@ export default class App extends Component {
       return <UniverseBg />
     } else if (bg === 'particle') {
       return <ParticleBg />
+    } else {
+      return <NewYearBg store={store} />
     }
   }
 
@@ -73,6 +79,7 @@ export default class App extends Component {
     return (
       <div>
         {this.renderBg()}
+        <Bgm />
         {
           store.token
             ? this.renderLogined()

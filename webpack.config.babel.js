@@ -29,7 +29,7 @@ const config = {
         ]
       },
       {
-        test: /\.(png|jpg|svg)$/,
+        test: /\.(png|jpg|svg|mp3)$/,
         use: ['url-loader?limit=1&name=images/[name].[ext]']
       },
       {

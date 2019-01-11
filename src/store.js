@@ -4,11 +4,12 @@ import RingCentral from 'ringcentral-js-concise'
 import delay from 'timeout-as-promise'
 import { fromEvent } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
+import copy from 'json-deep-copy'
 
 import config from './config'
 
 const rc = new RingCentral(config.RINGCENTRAL_CLIENT_ID, config.RINGCENTRAL_CLIENT_SECRET, config.RINGCENTRAL_SERVER_URI)
-const pagePadding = 242
+const pagePadding = 322
 const maxAvatarSize = 512
 const setCookie = Cookies.set.bind(Cookies)
 Cookies.set = (key, value, options) => {
@@ -28,11 +29,40 @@ function resize () {
 
 const store = SubX.create({
   luckyOnes: {},
+  prizeLevels: [
+    {
+      level: '3',
+      count: 20
+    },
+    {
+      level: '2',
+      count: 10
+    },
+    {
+      level: '1',
+      count: 2
+    }
+  ],
+  prizeLevel: '3',
+  prizeCount: 20,
   avatarSize: resize(),
-  bg: 'particle',
-  bgs: ['particle', 'universe'],
+  bg: 'newyear',
+  bgs: ['newyear', 'particle', 'universe'],
+  looping: false,
+  onChangeLevel (v) {
+    store.prizeLevel = v
+    let obj = store.prizeLevels.find(
+      r => r.level === v
+    )
+    store.prizeCount = obj.count
+  },
+  onChangeCount (v) {
+    store.prizeCount = parseInt(v, 10)
+  },
   get authorizeUri () {
-    return rc.authorizeUri(config.APP_HOME_URI, { responseType: 'code' })
+    return rc.authorizeUri(
+      config.APP_HOME_URI, { responseType: 'code' }
+    )
   },
   async fetchUser () {
     const r = await rc.get('/restapi/v1.0/account/~/extension/~')
@@ -73,28 +103,51 @@ const store = SubX.create({
     await this.fetchMembers()
   },
   async chooseLuckyOne () {
-    if (this.choosing) {
-      this.choosing = false
-      const items = this.team.members
-      let luckOneId = items[Math.floor(Math.random() * items.length)]
-      while (luckOneId in this.luckyOnes) {
-        luckOneId = items[Math.floor(Math.random() * items.length)]
-        if (Object.keys(this.luckyOnes).length === this.team.members.length) {
-          window.alert('Every one has received gifts! Continue will cause some one to receive gifts twice.')
-          this.luckyOnes = {}
+    const items = this.team.members
+    if (Object.keys(this.luckyOnes).length === this.team.members.length) {
+      window.alert('Every one has received gifts!')
+      return
+    }
+    let luckOneId = items[Math.floor(Math.random() * items.length)]
+    let luckyOne = copy(this.members[luckOneId])
+
+    while (luckOneId in this.luckyOnes) {
+      luckOneId = items[Math.floor(Math.random() * items.length)]
+      luckyOne = copy(this.members[luckOneId])
+    }
+    this.luckyOnes[luckOneId] = {
+      ...luckyOne,
+      prizeLevel: this.prizeLevel
+    }
+    this.luckyOne = luckyOne
+    let { prizeLevel } = this
+    await this.postMessage(
+      this.team.id,
+      {
+        text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) wins Prize ${prizeLevel} ! :tada: :tada:`
+      }
+    )
+  },
+  async chooseLuckyOnes () {
+    if (this.looping) {
+      this.looping = false
+      this.choosing = true
+      let { prizeCount } = this
+      for (let i = 0; i < prizeCount; i++) {
+        await this.chooseLuckyOne()
+        if (i < prizeCount - 1) {
+          await delay(3000)
         }
       }
-      this.luckyOnes[luckOneId] = true
-      this.luckyOne = this.members[luckOneId]
-      await this.postMessage(this.team.id, { text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) ! :tada: :tada:` })
+      this.choosing = false
     } else {
       delete this.luckyOne
-      this.choosing = true
+      this.looping = true
       this.startIterate()
     }
   },
   async startIterate () {
-    while (this.choosing) {
+    while (this.looping) {
       for (const memberId of this.team.members) {
         this.tempOne = this.members[memberId]
         await delay(50)
