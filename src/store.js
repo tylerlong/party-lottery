@@ -132,10 +132,6 @@ const store = SubX.create({
   },
   async chooseLuckyOne () {
     const items = this.team.members
-    if (Object.keys(this.luckyOnes).length === this.team.members.length) {
-      window.alert('Every one has received gifts!')
-      return
-    }
     let luckOneId = items[Math.floor(Math.random() * items.length)]
     let luckyOne = copy(this.members[luckOneId])
 
@@ -162,6 +158,10 @@ const store = SubX.create({
       this.choosing = true
       let { prizeCount } = this
       for (let i = 0; i < prizeCount; i++) {
+        if (Object.keys(this.luckyOnes).length === this.team.members.length) {
+          window.alert('Every one has received gifts!')
+          break
+        }
         await this.chooseLuckyOne()
         if (i < prizeCount - 1) {
           await delay(3000)
