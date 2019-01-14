@@ -71,8 +71,8 @@ const store = SubX.create({
       count: 2
     }
   ],
-  prizeLevel: '3',
-  prizeCount: 20,
+  prizeLevel: 'Lucky(1)',
+  prizeCount: 15,
   avatarSize: resize(),
   bg: 'newyear',
   bgs: ['newyear', 'particle', 'universe'],
