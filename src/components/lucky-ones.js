@@ -41,9 +41,10 @@ function downloadCsv (ones) {
 export default class LuckyOnes extends Component {
   render () {
     const { store } = this.props
-    const { luckyOnes } = store
-    let values = Object.values(luckyOnes)
-    if (!values.length) {
+    const { winners, luckyOnes } = store
+    let values = Object.values(winners)
+    let values1 = Object.values(luckyOnes)
+    if (!values1.length) {
       return null
     }
     return (
@@ -51,7 +52,7 @@ export default class LuckyOnes extends Component {
         <div className='btn-wrap'>
           <Button
             type='default'
-            onClick={() => downloadCsv(values)}
+            onClick={() => downloadCsv(values1)}
           >
             Download csv
           </Button>

@@ -29,6 +29,7 @@ function resize () {
 
 const store = SubX.create({
   luckyOnes: {},
+  winners: {},
   prizeLevels: [
     {
       level: 'Lucky(1)',
@@ -143,6 +144,10 @@ const store = SubX.create({
       ...luckyOne,
       prizeLevel: this.prizeLevel
     }
+    this.winners[luckOneId] = {
+      ...luckyOne,
+      prizeLevel: this.prizeLevel
+    }
     this.luckyOne = luckyOne
     let { prizeLevel } = this
     await this.postMessage(
@@ -157,6 +162,7 @@ const store = SubX.create({
       this.looping = false
       this.choosing = true
       let { prizeCount } = this
+      this.winners = {}
       for (let i = 0; i < prizeCount; i++) {
         if (Object.keys(this.luckyOnes).length === this.team.members.length) {
           window.alert('Every one has received gifts!')
