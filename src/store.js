@@ -132,14 +132,11 @@ const store = SubX.create({
     await this.fetchMembers()
   },
   async chooseLuckyOne () {
-    const items = this.team.members
+    let items = this.team.members.filter(id => {
+      return !this.luckyOnes[id]
+    })
     let luckOneId = items[Math.floor(Math.random() * items.length)]
     let luckyOne = copy(this.members[luckOneId])
-
-    while (luckOneId in this.luckyOnes) {
-      luckOneId = items[Math.floor(Math.random() * items.length)]
-      luckyOne = copy(this.members[luckOneId])
-    }
     this.luckyOnes[luckOneId] = {
       ...luckyOne,
       prizeLevel: this.prizeLevel
