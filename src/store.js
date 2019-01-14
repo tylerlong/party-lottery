@@ -31,15 +31,43 @@ const store = SubX.create({
   luckyOnes: {},
   prizeLevels: [
     {
-      level: '3',
-      count: 20
+      level: 'Lucky(1)',
+      count: 15
     },
     {
-      level: '2',
+      level: 'Lucky(2)',
+      count: 15
+    },
+    {
+      level: 'Lucky(3)',
+      count: 15
+    },
+    {
+      level: 'Thrid(1)',
+      count: 15
+    },
+    {
+      level: 'Thrid(2)',
       count: 10
     },
     {
-      level: '1',
+      level: 'Second(1)',
+      count: 7
+    },
+    {
+      level: 'Second(2)',
+      count: 7
+    },
+    {
+      level: 'First(1)',
+      count: 4
+    },
+    {
+      level: 'First(2)',
+      count: 4
+    },
+    {
+      level: 'Top',
       count: 2
     }
   ],
