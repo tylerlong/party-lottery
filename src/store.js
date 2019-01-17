@@ -61,11 +61,15 @@ const store = SubX.create({
     },
     {
       level: 'First(1)',
-      count: 4
+      count: 2
     },
     {
       level: 'First(2)',
-      count: 4
+      count: 3
+    },
+    {
+      level: 'First(3)',
+      count: 3
     },
     {
       level: 'Top',
