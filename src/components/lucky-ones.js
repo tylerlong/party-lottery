@@ -4,24 +4,30 @@
 
 import { Component } from 'react-subx'
 import React from 'react'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import download from './download'
 import time from './time'
 
 function renderLuckOne (luckyOne, i) {
+  let { firstName, lastName, email } = luckyOne
   return (
-    <div className='person' key={luckyOne.email + '__' + i}>
-      <img
-        className='iblock mg2y animated jackInTheBox luck-avatar'
-        height={40}
-        width={40}
-        src={
-          luckyOne.avatar === null
-            ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
-            : luckyOne.avatar
-        }
-      />
-    </div>
+    <Tooltip
+      title={`${firstName} ${lastName}(${email})`}
+      placement="top"
+    >
+      <div className='person' key={email + '__' + i}>
+        <img
+          className='iblock mg2y animated jackInTheBox luck-avatar'
+          height={40}
+          width={40}
+          src={
+            luckyOne.avatar === null
+              ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
+              : luckyOne.avatar
+          }
+        />
+      </div>
+    </Tooltip>
   )
 }
 
