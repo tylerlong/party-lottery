@@ -21,6 +21,7 @@ export default class LuckyOne extends Component {
                 ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
                 : luckyOne.avatar
             }
+            alt={`${luckyOne.firstName || ''} ${luckyOne.lastName || ''}`}
           />
         </h1>
       </div>

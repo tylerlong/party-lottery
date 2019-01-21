@@ -10,9 +10,10 @@ import time from './time'
 
 function renderLuckOne (luckyOne, i) {
   let { firstName, lastName, email } = luckyOne
+  let name = `${firstName || ''} ${lastName || ''}`
   return (
     <Tooltip
-      title={`${firstName} ${lastName}(${email})`}
+      title={`${name}(${email})`}
       placement="top"
       key={email + i}
     >
@@ -26,6 +27,7 @@ function renderLuckOne (luckyOne, i) {
               ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
               : luckyOne.avatar
           }
+          alt={name}
         />
       </div>
     </Tooltip>
