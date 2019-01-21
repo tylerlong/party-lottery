@@ -151,12 +151,18 @@ const store = SubX.create({
     }
     this.luckyOne = luckyOne
     let { prizeLevel } = this
-    await this.postMessage(
-      this.team.id,
-      {
-        text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) wins Prize ${prizeLevel} ! :tada: :tada:`
-      }
-    )
+    try {
+      await this.postMessage(
+        this.team.id,
+        {
+          text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) wins Prize ${prizeLevel} ! :tada: :tada:`
+        }
+      )
+    } catch (e) {
+      console.log('send msg fails')
+      console.log(e)
+    }
+
   },
   async chooseLuckyOnes () {
     if (this.looping) {

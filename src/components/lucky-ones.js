@@ -14,6 +14,7 @@ function renderLuckOne (luckyOne, i) {
     <Tooltip
       title={`${firstName} ${lastName}(${email})`}
       placement="top"
+      key={email + i}
     >
       <div className='person' key={email + '__' + i}>
         <img
