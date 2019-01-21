@@ -11,7 +11,7 @@ export default class Bgm extends Component {
   render () {
     return (
       <div className='bgm-box'>
-        <iframe src={require('../bgm/bgm.mp3')} allow='autoplay' id='audio-iframe' className='hide' />
+        <iframe src={require('../bgm/250-milliseconds-of-silence.mp3')} allow='autoplay' id='audio-iframe' className='hide' />
         <audio
           src={require('../bgm/bgm.mp3')}
           controls
