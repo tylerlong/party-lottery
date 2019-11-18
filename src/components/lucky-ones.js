@@ -14,7 +14,7 @@ function renderLuckOne (luckyOne, i) {
   return (
     <Tooltip
       title={`${name}(${email})`}
-      placement="top"
+      placement='top'
       key={email + i}
     >
       <div className='person' key={email + '__' + i}>
@@ -42,7 +42,10 @@ function buildCsv (ones) {
   }, 'index,name,email,prizeLevel\n')
 }
 
-function downloadCsv (ones) {
+function downloadCsv () {
+  let ones = JSON.parse(
+    window.localStorage.getItem('luckOnes')
+  )
   let name = `${time()}.csv`
   download(name, buildCsv(ones))
 }
@@ -53,24 +56,36 @@ export default class LuckyOnes extends Component {
     const { winners, luckyOnes } = store
     let values = Object.values(winners)
     let values1 = Object.values(luckyOnes)
-    if (!values1.length) {
-      return null
-    }
+    let ones = JSON.parse(
+      window.localStorage.getItem('luckOnes')
+    )
     return (
       <div className='luckyones'>
-        <div className='btn-wrap'>
-          <Button
-            type='default'
-            onClick={() => downloadCsv(values1)}
-          >
-            Download csv
-          </Button>
-        </div>
-        <div className='persons'>
-          {
-            values.map(renderLuckOne)
-          }
-        </div>
+        {
+          ones.length
+            ? (
+              <div className='btn-wrap'>
+                <Button
+                  type='default'
+                  onClick={downloadCsv}
+                >
+                  Download csv
+                </Button>
+              </div>
+            )
+            : null
+        }
+        {
+          values1.length
+            ? (
+              <div className='persons'>
+                {
+                  values.map(renderLuckOne)
+                }
+              </div>
+            )
+            : null
+        }
       </div>
     )
   }

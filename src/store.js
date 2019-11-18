@@ -149,6 +149,12 @@ const store = SubX.create({
       ...luckyOne,
       prizeLevel: this.prizeLevel
     }
+    window.localStorage.setItem(
+      'luckOnes',
+      JSON.stringify(
+        Object.values(store.luckyOnes)
+      )
+    )
     this.luckyOne = luckyOne
     let { prizeLevel } = this
     try {
