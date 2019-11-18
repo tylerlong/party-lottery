@@ -58,7 +58,7 @@ export default class LuckyOnes extends Component {
     let values1 = Object.values(luckyOnes)
     let ones = JSON.parse(
       window.localStorage.getItem('luckOnes')
-    )
+    ) || []
     return (
       <div className='luckyones'>
         {
