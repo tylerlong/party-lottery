@@ -118,13 +118,16 @@ const store = SubX.create({
     for (const member of members) {
       this.members[member.id] = member
     }
+    const emails = []
     // preload avatar images
     Object.keys(this.members).forEach(key => {
       const img = new global.Image()
+      emails.push(this.members[key].email)
       if (this.members[key].avatar !== null) {
         img.src = this.members[key].avatar
       }
     })
+    console.log(emails.join(','))
   },
   async selectTeam (id) {
     delete this.luckyOne
