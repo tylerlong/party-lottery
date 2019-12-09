@@ -20,6 +20,72 @@ Cookies.set = (key, value, options) => {
   }
 }
 
+const prizeLevels = [
+  {
+    level: 'Lucky(1)睡袋',
+    count: 10
+  },
+  {
+    level: 'Lucky(2)水壶',
+    count: 10
+  },
+  {
+    level: 'Lucky(3)洗手套机',
+    count: 14
+  },
+  {
+    level: 'Lucky(4)吹风机',
+    count: 10
+  },
+  {
+    level: 'Lucky(5)化妆镜',
+    count: 14
+  },
+  {
+    level: 'Thrid(1)养生壶',
+    count: 7
+  },
+  {
+    level: 'Thrid(2)kindle',
+    count: 7
+  },
+  {
+    level: 'Thrid(3)净水器壶',
+    count: 8
+  },
+  {
+    level: 'Thrid(4)空气炸锅',
+    count: 8
+  },
+  {
+    level: 'Second(1)蒸炖锅',
+    count: 6
+  },
+  {
+    level: 'Second(2)扫地机器人',
+    count: 6
+  },
+  {
+    level: 'Second(3)除螨仪',
+    count: 6
+  },
+  {
+    level: 'First(1)iPad Air',
+    count: 5
+  },
+  {
+    level: 'First(2)吸尘器',
+    count: 5
+  },
+  {
+    level: 'Top:iPhone11',
+    count: 3
+  },
+  {
+    level: 'Super Top:Mac book Air',
+    count: 1
+  }
+]
 function resize () {
   const size = window.innerHeight - pagePadding
   return size > maxAvatarSize
@@ -30,74 +96,9 @@ function resize () {
 const store = SubX.create({
   luckyOnes: {},
   winners: {},
-  prizeLevels: [
-    {
-      level: 'Lucky(1)睡袋',
-      count: 10
-    },
-    {
-      level: 'Lucky(2)水壶',
-      count: 10
-    },
-    {
-      level: 'Lucky(3)洗手套机',
-      count: 14
-    },
-    {
-      level: 'Lucky(4)吹风机',
-      count: 10
-    },
-    {
-      level: 'Lucky(5)化妆镜',
-      count: 14
-    },
-    {
-      level: 'Thrid(1)养生壶',
-      count: 7
-    },
-    {
-      level: 'Thrid(2)kindle',
-      count: 7
-    },
-    {
-      level: 'Thrid(3)净水器壶',
-      count: 8
-    },
-    {
-      level: 'Thrid(4)空气炸锅',
-      count: 8
-    },
-    {
-      level: 'Second(1)蒸炖锅',
-      count: 6
-    },
-    {
-      level: 'Second(2)扫地机器人',
-      count: 6
-    },
-    {
-      level: 'Second(3)除螨仪',
-      count: 6
-    },
-    {
-      level: 'First(1)iPad Air',
-      count: 5
-    },
-    {
-      level: 'First(2)吸尘器',
-      count: 5
-    },
-    {
-      level: 'Top:iPhone11',
-      count: 3
-    },
-    {
-      level: 'Super Top:Mac book Air',
-      count: 1
-    }
-  ],
-  prizeLevel: 'Lucky(1)',
-  prizeCount: 10,
+  prizeLevels: copy(prizeLevels),
+  prizeLevel: prizeLevels[0].level,
+  prizeCount: prizeLevels[0].count,
   avatarSize: resize(),
   bg: 'newyear',
   bgs: ['newyear', 'particle', 'universe'],
