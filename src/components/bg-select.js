@@ -4,13 +4,13 @@ import './bg-select.styl'
 
 export default class BgSelect extends Component {
   render () {
-    let { store } = this.props
-    let { bgs, bg } = store
+    const { store } = this.props
+    const { bgs, bg } = store
     return (
       <div className='bg-selects'>
         {
           bgs.map(b => {
-            let cls = `bg-select bg-${b}${b === bg ? ' active' : ''}`
+            const cls = `bg-select bg-${b}${b === bg ? ' active' : ''}`
             return (
               <div
                 className={cls}

@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open --progress --colors",
-    "release": "webpack --progress --colors --config webpack.config.prod.babel.js"
+    "release": "webpack --progress --colors --config webpack.config.prod.babel.js",
+    "lint": "./node_modules/.bin/standard",
+    "fix": "./node_modules/.bin/standard --fix"
   },
   "dependencies": {
     "antd": "^3.25.2",

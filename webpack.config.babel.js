@@ -1,6 +1,6 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { HotModuleReplacementPlugin, LoaderOptionsPlugin } from 'webpack'
-const stylusSettingPlugin =  new LoaderOptionsPlugin({
+const stylusSettingPlugin = new LoaderOptionsPlugin({
   test: /\.styl$/,
   stylus: {
     preferPathResolver: 'webpack'

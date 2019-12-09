@@ -1,13 +1,13 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { LoaderOptionsPlugin } from 'webpack'
-const stylusSettingPlugin =  new LoaderOptionsPlugin({
+import { join } from 'path'
+const stylusSettingPlugin = new LoaderOptionsPlugin({
   test: /\.styl$/,
   stylus: {
     preferPathResolver: 'webpack'
   },
   'resolve url': false
 })
-import { join } from 'path'
 
 const config = {
   mode: 'production',

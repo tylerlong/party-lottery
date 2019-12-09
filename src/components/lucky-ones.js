@@ -9,8 +9,8 @@ import download from './download'
 import time from './time'
 
 function renderLuckOne (luckyOne, i) {
-  let { firstName, lastName, email } = luckyOne
-  let name = `${firstName || ''} ${lastName || ''}`
+  const { firstName, lastName, email } = luckyOne
+  const name = `${firstName || ''} ${lastName || ''}`
   return (
     <Tooltip
       title={`${name}(${email})`}
@@ -36,17 +36,17 @@ function renderLuckOne (luckyOne, i) {
 
 function buildCsv (ones) {
   return ones.reduce((prev, curr, i) => {
-    let { email, firstName, lastName, prizeLevel } = curr
+    const { email, firstName, lastName, prizeLevel } = curr
     return prev +
     `"${i + 1}","${firstName} ${lastName}","${email}","${prizeLevel}"\n`
   }, 'index,name,email,prizeLevel\n')
 }
 
 function downloadCsv () {
-  let ones = JSON.parse(
+  const ones = JSON.parse(
     window.localStorage.getItem('luckOnes')
   )
-  let name = `${time()}.csv`
+  const name = `${time()}.csv`
   download(name, buildCsv(ones))
 }
 
@@ -54,9 +54,9 @@ export default class LuckyOnes extends Component {
   render () {
     const { store } = this.props
     const { winners, luckyOnes } = store
-    let values = Object.values(winners)
-    let values1 = Object.values(luckyOnes)
-    let ones = JSON.parse(
+    const values = Object.values(winners)
+    const values1 = Object.values(luckyOnes)
+    const ones = JSON.parse(
       window.localStorage.getItem('luckOnes')
     ) || []
     return (

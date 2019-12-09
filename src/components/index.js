@@ -30,7 +30,7 @@ export default class App extends Component {
               : null
           }
           <div className='fright'>
-            <span onClick={store.logout} className='pointer'>
+            <span onClick={store.handleLogout} className='pointer'>
               <Icon type='logout' /> Log out
             </span>
           </div>

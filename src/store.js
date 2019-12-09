@@ -21,7 +21,7 @@ Cookies.set = (key, value, options) => {
 }
 
 function resize () {
-  let size = window.innerHeight - pagePadding
+  const size = window.innerHeight - pagePadding
   return size > maxAvatarSize
     ? maxAvatarSize
     : size
@@ -33,63 +33,83 @@ const store = SubX.create({
   prizeLevels: [
     {
       level: 'Lucky(1)',
-      count: 15
-    },
-    {
-      level: 'Lucky(2)',
-      count: 15
-    },
-    {
-      level: 'Lucky(3)',
-      count: 15
-    },
-    {
-      level: 'Thrid(1)',
-      count: 15
-    },
-    {
-      level: 'Thrid(2)',
       count: 10
     },
     {
-      level: 'Second(1)',
+      level: 'Lucky(2)',
+      count: 10
+    },
+    {
+      level: 'Lucky(3)',
+      count: 14
+    },
+    {
+      level: 'Lucky(4)',
+      count: 10
+    },
+    {
+      level: 'Lucky(5)',
+      count: 14
+    },
+    {
+      level: 'Thrid(1)',
       count: 7
+    },
+    {
+      level: 'Thrid(2)',
+      count: 7
+    },
+    {
+      level: 'Thrid(3)',
+      count: 8
+    },
+    {
+      level: 'Thrid(4)',
+      count: 8
+    },
+    {
+      level: 'Second(1)',
+      count: 6
     },
     {
       level: 'Second(2)',
-      count: 7
+      count: 6
+    },
+    {
+      level: 'Second(3)',
+      count: 6
     },
     {
       level: 'First(1)',
-      count: 2
+      count: 5
     },
     {
       level: 'First(2)',
-      count: 3
-    },
-    {
-      level: 'First(3)',
-      count: 3
+      count: 5
     },
     {
       level: 'Top',
-      count: 2
+      count: 3
+    },
+    {
+      level: 'Super Top',
+      count: 1
     }
   ],
   prizeLevel: 'Lucky(1)',
-  prizeCount: 15,
+  prizeCount: 10,
   avatarSize: resize(),
   bg: 'newyear',
   bgs: ['newyear', 'particle', 'universe'],
   looping: false,
-  onChangeLevel (v) {
+  handleChangeLevel (v) {
     store.prizeLevel = v
-    let obj = store.prizeLevels.find(
+    const obj = store.prizeLevels.find(
       r => r.level === v
     )
     store.prizeCount = obj.count
   },
-  onChangeCount (v) {
+  handleChangeCount (v) {
     store.prizeCount = parseInt(v, 10)
   },
   get authorizeUri () {
@@ -105,7 +125,7 @@ const store = SubX.create({
     const r = await rc.get('/restapi/v1.0/glip/groups', { params: { type: 'Team', recordCount: 250 } })
     this.teams = r.data.records
   },
-  async logout () {
+  async handleLogout () {
     await rc.revoke()
   },
   async postMessage (teamId, messageObj) {
@@ -139,11 +159,11 @@ const store = SubX.create({
     await this.fetchMembers()
   },
   async chooseLuckyOne () {
-    let items = this.team.members.filter(id => {
+    const items = this.team.members.filter(id => {
       return !this.luckyOnes[id]
     })
-    let luckOneId = items[Math.floor(Math.random() * items.length)]
-    let luckyOne = copy(this.members[luckOneId])
+    const luckOneId = items[Math.floor(Math.random() * items.length)]
+    const luckyOne = copy(this.members[luckOneId])
     this.luckyOnes[luckOneId] = {
       ...luckyOne,
       prizeLevel: this.prizeLevel
@@ -159,7 +179,7 @@ const store = SubX.create({
       )
     )
     this.luckyOne = luckyOne
-    let { prizeLevel } = this
+    const { prizeLevel } = this
     try {
       await this.postMessage(
         this.team.id,
@@ -171,13 +191,12 @@ const store = SubX.create({
       console.log('send msg fails')
       console.log(e)
     }
-
   },
   async chooseLuckyOnes () {
     if (this.looping) {
       this.looping = false
       this.choosing = true
-      let { prizeCount } = this
+      const { prizeCount } = this
       this.winners = {}
       for (let i = 0; i < prizeCount; i++) {
         if (Object.keys(this.luckyOnes).length === this.team.members.length) {

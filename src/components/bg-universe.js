@@ -7,8 +7,8 @@ export default class App extends Component {
 
   initBg () {
     // instantiate a loader
-    let loader = new window.THREE.TextureLoader()
-    let Universe = window.Universe.default
+    const loader = new window.THREE.TextureLoader()
+    const Universe = window.Universe.default
     // load a resource
     loader.load(
       // resource URL

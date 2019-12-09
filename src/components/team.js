@@ -32,9 +32,10 @@ export default class Team extends Component {
             }
           </Button>
           <Select
-            onChange={store.onChangeLevel}
+            onChange={store.handleChangeLevel}
             className='mg1r'
             value={prizeLevel + ''}
+            dropdownMatchSelectWidth={false}
             size='large'
           >
             {
@@ -50,7 +51,7 @@ export default class Team extends Component {
           <InputNumber
             value={prizeCount}
             size='large'
-            onChange={store.onChangeCount}
+            onChange={store.handleChangeCount}
           />
         </div>
       )
@@ -64,7 +65,7 @@ export default class Team extends Component {
         }
         {
           looping
-            ? <h1 className='pd2'><Spin size='large' /> { store.tempOne.email }</h1>
+            ? <h1 className='pd2'><Spin size='large' /> {store.tempOne.email}</h1>
             : null
         }
         {
