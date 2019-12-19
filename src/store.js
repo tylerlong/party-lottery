@@ -100,7 +100,7 @@ const store = SubX.create({
   prizeLevel: prizeLevels[0].level,
   prizeCount: prizeLevels[0].count,
   avatarSize: resize(),
-  bg: 'newyear',
+  bg: 'universe',
   bgs: ['newyear', 'particle', 'universe'],
   looping: false,
   handleChangeLevel (v) {

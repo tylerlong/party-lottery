@@ -12,7 +12,7 @@ export default class App extends Component {
     // load a resource
     loader.load(
       // resource URL
-      '//unpkg.com/universe-bg/dist/star.png',
+      '/images/star_v0.3.png',
       // Function when resource is loaded
       function (texture) {
         return new Universe({
@@ -23,7 +23,8 @@ export default class App extends Component {
           width: null,
           height: null,
           container: document.getElementById('ubg'),
-          map: texture
+          map: texture,
+          background: '#1f2d5d'
         })
       }
     )

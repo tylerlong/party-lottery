@@ -53,6 +53,7 @@ export default class App extends Component {
       <div className='main aligncenter login-page'>
         <div className='logo'>
           <img src={require('../images/rc128.png')} alt='RingCentral' />
+          <img className='hide' src={require('../images/star_v0.3.png')} />
         </div>
         <a href={store.authorizeUri}>
           <Button type='primary' size='large'>Login to Party Lottery System</Button>
