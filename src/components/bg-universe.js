@@ -12,7 +12,7 @@ export default class App extends Component {
     // load a resource
     loader.load(
       // resource URL
-      '/images/star_v0.3.png',
+      'https://chuntaoliu.com/party-lottery/images/star_v0.3.png',
       // Function when resource is loaded
       function (texture) {
         return new Universe({
