@@ -24,7 +24,7 @@ export default class App extends Component {
           height: null,
           container: document.getElementById('ubg'),
           map: texture,
-          background: '#1f2d5d'
+          background: '#1e2c5a'
         })
       }
     )

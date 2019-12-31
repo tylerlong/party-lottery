@@ -42,20 +42,12 @@ const prizeLevels = [
     count: 14
   },
   {
-    level: 'Thrid(1)养生壶',
-    count: 7
+    level: 'Thrid(1)养生壶/kindle',
+    count: 14
   },
   {
-    level: 'Thrid(2)kindle',
-    count: 7
-  },
-  {
-    level: 'Thrid(3)净水器壶',
-    count: 8
-  },
-  {
-    level: 'Thrid(4)空气炸锅',
-    count: 8
+    level: 'Thrid(2)净水器壶/空气炸锅',
+    count: 16
   },
   {
     level: 'Second(1)蒸炖锅',
