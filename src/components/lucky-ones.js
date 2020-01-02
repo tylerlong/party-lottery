@@ -44,7 +44,7 @@ function buildCsv (ones) {
 
 function downloadCsv () {
   const ones = JSON.parse(
-    window.localStorage.getItem('luckOnes')
+    window.localStorage.getItem(window.rcLsKey)
   )
   const name = `${time()}.csv`
   download(name, buildCsv(ones))
@@ -57,7 +57,7 @@ export default class LuckyOnes extends Component {
     const values = Object.values(winners)
     const values1 = Object.values(luckyOnes)
     const ones = JSON.parse(
-      window.localStorage.getItem('luckOnes')
+      window.localStorage.getItem(window.rcLsKey)
     ) || []
     return (
       <div className='luckyones'>

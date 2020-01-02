@@ -20,6 +20,20 @@ Cookies.set = (key, value, options) => {
   }
 }
 
+function now () {
+  const t = new Date()
+  const y = t.getFullYear()
+  const m = t.getMonth() + 1
+  const d = t.getDate()
+  const h = t.getHours()
+  const mi = t.getMinutes()
+  const s = t.getSeconds()
+  return `${y}-${m}-${d}_${h}:${mi}:${s}`
+}
+
+window.rcNow = now()
+window.rcLsKey = 'luckOnes' + window.rcNow
+
 const prizeLevels = [
   {
     level: 'Lucky(1)睡袋',
@@ -166,7 +180,7 @@ const store = SubX.create({
       prizeLevel: this.prizeLevel
     }
     window.localStorage.setItem(
-      'luckOnes',
+      window.rcLsKey,
       JSON.stringify(
         Object.values(store.luckyOnes)
       )
