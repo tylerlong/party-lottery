@@ -42,13 +42,15 @@ function buildCsv (ones) {
   }, 'index,name,email,prizeLevel\n')
 }
 
-function downloadCsv () {
+function downloadCsv (key = window.rcLsKey) {
   const ones = JSON.parse(
-    window.localStorage.getItem(window.rcLsKey)
+    window.localStorage.getItem(key)
   )
   const name = `${time()}.csv`
   download(name, buildCsv(ones))
 }
+
+window.downloadCsv = downloadCsv
 
 export default class LuckyOnes extends Component {
   render () {
