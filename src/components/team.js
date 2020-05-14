@@ -39,9 +39,9 @@ export default class Team extends Component {
             size='large'
           >
             {
-              prizeLevels.map(({ level }) => {
+              prizeLevels.map(({ level }, i) => {
                 return (
-                  <Option value={level} key={level}>
+                  <Option value={level} key={level + i}>
                     {level}
                   </Option>
                 )

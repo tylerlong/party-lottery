@@ -8,6 +8,7 @@ import UniverseBg from './bg-universe'
 import NewYearBg from './bg-new-year'
 import LuckOnes from './lucky-ones'
 import Bgm from './bgm'
+import PrizeSetting from './prize-setting'
 
 export default class App extends Component {
   componentDidMount () {
@@ -43,6 +44,7 @@ export default class App extends Component {
           }
         </div>
         <LuckOnes store={store} />
+        <PrizeSetting store={store} />
       </div>
     )
   }

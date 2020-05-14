@@ -44,43 +44,43 @@ const prizeLevels = [
     count: 10
   },
   {
-    level: 'Lucky(3)洗手套机',
+    level: 'Lucky(3)',
     count: 14
   },
   {
-    level: 'Lucky(4)吹风机',
+    level: 'Lucky(4)',
     count: 10
   },
   {
-    level: 'Lucky(5)化妆镜',
+    level: 'Lucky(5)',
     count: 14
   },
   {
-    level: 'Thrid(1)养生壶/kindle',
+    level: 'Thrid(1)',
     count: 14
   },
   {
-    level: 'Thrid(2)净水器壶/空气炸锅',
+    level: 'Thrid(2)',
     count: 16
   },
   {
-    level: 'Second(1)蒸炖锅',
+    level: 'Second(1)',
     count: 6
   },
   {
-    level: 'Second(2)扫地机器人',
+    level: 'Second(2)',
     count: 6
   },
   {
-    level: 'Second(3)除螨仪',
+    level: 'Second(3)',
     count: 6
   },
   {
-    level: 'First(1)iPad Air',
+    level: 'First(1)',
     count: 5
   },
   {
-    level: 'First(2)吸尘器',
+    level: 'First(2)',
     count: 5
   },
   {
@@ -107,13 +107,27 @@ function getPrizeLevels () {
 const store = SubX.create({
   luckyOnes: {},
   winners: {},
+  showPrizeEdit: false,
   prizeLevels: getPrizeLevels(),
-  prizeLevel: prizeLevels[0].level,
-  prizeCount: prizeLevels[0].count,
+  prizeLevel: getPrizeLevels()[0].level,
+  prizeCount: getPrizeLevels()[0].count,
   avatarSize: resize(),
   bg: 'universe',
   bgs: ['newyear', 'particle', 'universe'],
   looping: false,
+  handleOkPrizeEdit (prizes) {
+    store.prizeLevels = copy(prizes)
+    window.localStorage.setItem(
+      'prizeLevels', JSON.stringify(prizes)
+    )
+    store.showPrizeEdit = false
+  },
+  handleCancelPrizeEdit () {
+    store.showPrizeEdit = false
+  },
+  handleEdit () {
+    store.showPrizeEdit = true
+  },
   handleChangeLevel (v) {
     store.prizeLevel = v
     const obj = store.prizeLevels.find(
