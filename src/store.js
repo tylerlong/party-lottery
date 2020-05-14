@@ -36,11 +36,11 @@ window.rcLsKey = 'luckOnes' + window.rcNow
 
 const prizeLevels = [
   {
-    level: 'Lucky(1)睡袋',
+    level: 'Lucky Prize',
     count: 10
   },
   {
-    level: 'Lucky(2)水壶',
+    level: 'Lucky1',
     count: 10
   },
   {
@@ -84,11 +84,11 @@ const prizeLevels = [
     count: 5
   },
   {
-    level: 'Top:iPhone11',
+    level: 'Top prize',
     count: 3
   },
   {
-    level: 'Super Top:Mac book Air',
+    level: 'Super Top',
     count: 1
   }
 ]
@@ -99,10 +99,15 @@ function resize () {
     : size
 }
 
+function getPrizeLevels () {
+  const st = window.localStorage.getItem('prizeLevels')
+  return st ? JSON.parse(st) : copy(prizeLevels)
+}
+
 const store = SubX.create({
   luckyOnes: {},
   winners: {},
-  prizeLevels: copy(prizeLevels),
+  prizeLevels: getPrizeLevels(),
   prizeLevel: prizeLevels[0].level,
   prizeCount: prizeLevels[0].count,
   avatarSize: resize(),
