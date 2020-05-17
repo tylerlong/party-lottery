@@ -104,6 +104,11 @@ function getPrizeLevels () {
   return st ? JSON.parse(st) : copy(prizeLevels)
 }
 
+function getExcludeIds () {
+  const st = window.localStorage.getItem('excludeIds')
+  return st ? JSON.parse(st) : []
+}
+
 const store = SubX.create({
   luckyOnes: {},
   winners: {},
@@ -114,6 +119,7 @@ const store = SubX.create({
   avatarSize: resize(),
   bg: 'universe',
   bgs: ['newyear', 'particle', 'universe'],
+  getExcludeIds: getExcludeIds(),
   looping: false,
   handleOkPrizeEdit (prizes) {
     store.prizeLevels = copy(prizes)
@@ -122,6 +128,7 @@ const store = SubX.create({
     )
     store.showPrizeEdit = false
   },
+  excludeIds: [],
   handleCancelPrizeEdit () {
     store.showPrizeEdit = false
   },
@@ -225,7 +232,7 @@ const store = SubX.create({
       const { prizeCount } = this
       this.winners = {}
       for (let i = 0; i < prizeCount; i++) {
-        if (Object.keys(this.luckyOnes).length === this.team.members.length) {
+        if (Object.keys(this.luckyOnes).length === this.team.members.length - this.excludeIds.length) {
           window.alert('Every one has received gifts!')
           break
         }
@@ -244,8 +251,11 @@ const store = SubX.create({
   async startIterate () {
     while (this.looping) {
       for (const memberId of this.team.members) {
-        this.tempOne = this.members[memberId]
-        await delay(50)
+        const tempOne = this.members[memberId]
+        if (tempOne) {
+          this.tempOne = tempOne
+          await delay(50)
+        }
       }
     }
     delete this.tempOne
