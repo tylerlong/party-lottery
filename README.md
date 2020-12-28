@@ -2,6 +2,7 @@
 
 Choose lucky ones to receive gifts during party.
 
+Link: [https://chuntaoliu.com/party-lottery/](https://chuntaoliu.com/party-lottery/)
 
 ## Development setup
 
