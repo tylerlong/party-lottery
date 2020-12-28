@@ -20,6 +20,26 @@ Cookies.set = (key, value, options) => {
   }
 }
 
+function shuffle (array) {
+  let currentIndex = array.length
+  let temporaryValue
+  let randomIndex
+
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex -= 1
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex]
+    array[currentIndex] = array[randomIndex]
+    array[randomIndex] = temporaryValue
+  }
+
+  return array
+}
+
 function now () {
   const t = new Date()
   const y = t.getFullYear()
@@ -36,59 +56,87 @@ window.rcLsKey = 'luckOnes' + window.rcNow
 
 const prizeLevels = [
   {
-    level: 'Lucky Prize',
-    count: 10
+    level: 'Everyone-1',
+    count: 100
   },
   {
-    level: 'Lucky1',
-    count: 10
+    level: 'Everyone-2',
+    count: 100
+  },
+  {
+    level: 'Everyone-3',
+    count: 110
+  },
+  {
+    level: 'Everyone-4',
+    count: 110
+  },
+  {
+    level: 'Lucky(1)',
+    count: 15
+  },
+  {
+    level: 'Lucky(2)',
+    count: 15
   },
   {
     level: 'Lucky(3)',
-    count: 14
+    count: 15
   },
   {
     level: 'Lucky(4)',
-    count: 10
-  },
-  {
-    level: 'Lucky(5)',
-    count: 14
+    count: 18
   },
   {
     level: 'Thrid(1)',
-    count: 14
+    count: 15
   },
   {
     level: 'Thrid(2)',
-    count: 16
+    count: 15
+  },
+  {
+    level: 'Thrid(3)',
+    count: 20
   },
   {
     level: 'Second(1)',
-    count: 6
+    count: 7
   },
   {
     level: 'Second(2)',
-    count: 6
+    count: 7
   },
   {
     level: 'Second(3)',
-    count: 6
+    count: 7
   },
   {
     level: 'First(1)',
-    count: 5
+    count: 10
   },
   {
     level: 'First(2)',
-    count: 5
+    count: 10
   },
   {
-    level: 'Top prize',
+    level: 'Top prize1',
     count: 3
   },
   {
-    level: 'Super Top',
+    level: 'Top prize2',
+    count: 3
+  },
+  {
+    level: 'Top prize3',
+    count: 3
+  },
+  {
+    level: 'Super Top1',
+    count: 1
+  },
+  {
+    level: 'Super Top2',
     count: 1
   }
 ]
@@ -117,7 +165,7 @@ const store = SubX.create({
   prizeLevel: getPrizeLevels()[0].level,
   prizeCount: getPrizeLevels()[0].count,
   avatarSize: resize(),
-  bg: 'universe',
+  bg: 'newyear',
   bgs: ['newyear', 'particle', 'universe'],
   getExcludeIds: getExcludeIds(),
   looping: false,
@@ -227,6 +275,7 @@ const store = SubX.create({
   },
   async chooseLuckyOnes () {
     if (this.looping) {
+      delete this.tempOne
       this.looping = false
       this.choosing = true
       const { prizeCount } = this
@@ -249,8 +298,11 @@ const store = SubX.create({
     }
   },
   async startIterate () {
+    const items = shuffle(this.team.members.filter(id => {
+      return !this.luckyOnes[id]
+    }))
     while (this.looping) {
-      for (const memberId of this.team.members) {
+      for (const memberId of items) {
         const tempOne = this.members[memberId]
         if (tempOne) {
           this.tempOne = tempOne

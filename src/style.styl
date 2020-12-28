@@ -28,7 +28,7 @@ h4
 #nbg
   background red
   background-size 100%
-  background-image url('images/bg1.png')
+  background-image url('images/bg1.jpg')
   background-size cover
 #nbg-inner
   background none
@@ -59,6 +59,10 @@ h4
   backgroud rgba(0,0,0, .8)
 .lucky-result
   font-size 40px
+.name-bg
+  display inline-block
+  padding 4px
+  background rgba(0,0,0,.85)
 .email
   font-size 34px
   color #fff
@@ -93,52 +97,52 @@ h4
   height 40px
 
 for $i, $index in 5 16 32
-  
+
   //padding
   .pd{$index+1}
     padding ($i)px
-    
+
   .pd{$index+1}x
     padding-left ($i)px
     padding-right ($i)px
 
   .pd{$index+1}l
     padding-left ($i)px
-  
+
   .pd{$index+1}r
     padding-right ($i)px
-    
+
   .pd{$index+1}y
     padding-top ($i)px
     padding-bottom ($i)px
 
   .pd{$index+1}t
     padding-top ($i)px
-  
+
   .pd{$index+1}b
     padding-bottom ($i)px
 
   //margin
   .mg{$index+1}
     margin ($i)px
-    
+
   .mg{$index+1}x
     margin-left ($i)px
     margin-right ($i)px
 
   .mg{$index+1}l
     margin-left ($i)px
-  
+
   .mg{$index+1}r
     margin-right ($i)px
-    
+
   .mg{$index+1}y
     margin-top ($i)px
     margin-bottom ($i)px
 
   .mg{$index+1}t
     margin-top ($i)px
-  
+
   .mg{$index+1}b
     margin-bottom ($i)px
 
@@ -149,7 +153,7 @@ for $i, $index in 5 16 32
   margin 0
 .pd0
   padding 0
-  
+
 .block
   display block
 
@@ -163,7 +167,7 @@ for $i, $index in 5 16 32
 .ibblock
   display inline-block
   vertical-align baseline
-  
+
 .itblock
   display inline-block
   vertical-align top
@@ -197,7 +201,7 @@ for $i, $index in 5 16 32
   border-style dotted
 
 .hide,
-.hide1, 
+.hide1,
 .hide2
   display none
 
@@ -221,7 +225,7 @@ for $i, $index in 5 16 32
 .fix
   &:after
     clear both
-    
+
 .overhide
   overflow hidden
 

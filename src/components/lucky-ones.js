@@ -23,7 +23,7 @@ function renderLuckOne (luckyOne, i) {
           height={40}
           width={40}
           src={
-            luckyOne.avatar === null
+            !luckyOne.avatar
               ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
               : luckyOne.avatar
           }
@@ -74,7 +74,7 @@ export default class LuckyOnes extends Component {
                   Download csv
                 </Button>
               </div>
-            )
+              )
             : null
         }
         {
@@ -85,7 +85,7 @@ export default class LuckyOnes extends Component {
                   values.map(renderLuckOne)
                 }
               </div>
-            )
+              )
             : null
         }
       </div>
