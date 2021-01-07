@@ -5,13 +5,16 @@ import React from 'react'
 export default class LuckyOne extends Component {
   render () {
     const { store } = this.props
-    const { luckyOne, avatarSize } = store
+    const { luckyOne, avatarSize, prizeLevel } = store
     return (
       <div className='pd2 lucky-result'>
         <h1>
           <div className='email animated tada'>
             <div>
-              <span className='name-bg'>🎁 {luckyOne.firstName} {luckyOne.lastName}🎁</span>
+              <span className='name-bg'>🎁 {prizeLevel} 🎁</span>
+            </div>
+            <div>
+              <span className='name-bg'>{luckyOne.firstName} {luckyOne.lastName}</span>
             </div>
             <div>
               <span className='name-bg'>({luckyOne.email})</span>
