@@ -19,7 +19,7 @@ function renderLuckOne (luckyOne, i) {
     >
       <div className='person' key={email + '__' + i}>
         <img
-          className='iblock mg2y animated jackInTheBox luck-avatar'
+          className='iblock mg2y animated jackInTheBox luck-avatar-person'
           height={40}
           width={40}
           src={

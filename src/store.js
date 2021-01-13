@@ -259,12 +259,17 @@ const store = SubX.create({
         Object.values(store.luckyOnes)
       )
     )
+  },
+
+  async notifyPrize () {
     const { prizeLevel } = this
+    const persons = Object.values(this.winners)
+    const str = persons.map(p => `![:Person](${p.id})`).join(' ')
     try {
       await this.postMessage(
         this.team.id,
         {
-          text: `:tada: :tada: Congratulations ![:Person](${luckyOne.id}) wins Prize ${prizeLevel} ! :tada: :tada:`
+          text: `:tada: :tada: Congratulations ${str} wins Prize ${prizeLevel} ! :tada: :tada:`
         }
       )
     } catch (e) {
@@ -272,6 +277,7 @@ const store = SubX.create({
       console.log(e)
     }
   },
+
   async chooseLuckyOnes () {
     if (this.looping) {
       delete this.tempOne
@@ -285,7 +291,9 @@ const store = SubX.create({
           break
         }
         await this.chooseLuckyOne()
+        await delay(100)
       }
+      this.notifyPrize()
       this.choosing = false
     } else {
       delete this.luckyOne
