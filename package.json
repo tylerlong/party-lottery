@@ -1,7 +1,7 @@
 {
   "name": "party-lottery",
   "description": "Choose lucky ones to receive gifts during party.",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open --progress --colors",

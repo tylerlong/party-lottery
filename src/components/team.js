@@ -56,8 +56,13 @@ export default class Team extends Component {
         </div>
       )
     }
+    const pts = {
+      style: {
+        height: (window.innerHeight - 90 - 120) + 'px'
+      }
+    }
     return (
-      <div className='team aligncenter pd1b'>
+      <div className='team aligncenter pd1b' {...pts}>
         {
           store.members
             ? renderSelects()
@@ -69,7 +74,7 @@ export default class Team extends Component {
             : null
         }
         {
-          store.luckyOne
+          Object.keys(store.winners).length
             ? <LuckyOne store={store} />
             : null
         }

@@ -259,13 +259,12 @@ const store = SubX.create({
         Object.values(store.luckyOnes)
       )
     )
-    this.luckyOne = luckyOne
     const { prizeLevel } = this
     try {
       await this.postMessage(
         this.team.id,
         {
-          text: `:tada: :tada: Congratulations ![:Person](${this.luckyOne.id}) wins Prize ${prizeLevel} ! :tada: :tada:`
+          text: `:tada: :tada: Congratulations ![:Person](${luckyOne.id}) wins Prize ${prizeLevel} ! :tada: :tada:`
         }
       )
     } catch (e) {
@@ -286,9 +285,6 @@ const store = SubX.create({
           break
         }
         await this.chooseLuckyOne()
-        if (i < prizeCount - 1) {
-          await delay(3000)
-        }
       }
       this.choosing = false
     } else {

@@ -74,7 +74,7 @@ export default class LuckyOnes extends Component {
                   Download csv
                 </Button>
               </div>
-              )
+            )
             : null
         }
         {
@@ -85,7 +85,7 @@ export default class LuckyOnes extends Component {
                   values.map(renderLuckOne)
                 }
               </div>
-              )
+            )
             : null
         }
       </div>
