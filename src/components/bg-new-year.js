@@ -15,8 +15,8 @@ export default class App extends Component {
     return (
       <div id='nbg'>
         <canvas id='nbg-inner' />
-        <img className='cracker hide' src={require('../images/crack.png')} />
-        <img className='cracker mirror hide' src={require('../images/crack.png')} />
+        <img className='cracker hide' src={require('../images/crack.png').default} />
+        <img className='cracker mirror hide' src={require('../images/crack.png').default} />
       </div>
     )
   }

@@ -54,6 +54,9 @@ window.downloadCsv = downloadCsv
 
 export default class LuckyOnes extends Component {
   render () {
+    const { store } = this.props
+    const { luckyOnes } = store
+    const values1 = Object.values(luckyOnes)
     const ones = JSON.parse(
       window.localStorage.getItem(window.rcLsKey)
     ) || []
@@ -65,9 +68,9 @@ export default class LuckyOnes extends Component {
               <div className='btn-wrap'>
                 <Button
                   type='default'
-                  onClick={downloadCsv}
+                  onClick={() => downloadCsv()}
                 >
-                  Download csv
+                  Download csv ({values1.length})
                 </Button>
               </div>
             )

@@ -160,6 +160,7 @@ function getExcludeIds () {
 const store = SubX.create({
   luckyOnes: {},
   winners: {},
+  allDone: false,
   showPrizeEdit: false,
   prizeLevels: getPrizeLevels(),
   prizeLevel: getPrizeLevels()[0].level,
@@ -287,6 +288,7 @@ const store = SubX.create({
       this.winners = {}
       for (let i = 0; i < prizeCount; i++) {
         if (Object.keys(this.luckyOnes).length === this.team.members.length - this.excludeIds.length) {
+          this.allDone = true
           window.alert('Every one has received gifts!')
           break
         }
