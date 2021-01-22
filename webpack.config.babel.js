@@ -1,5 +1,5 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import { HotModuleReplacementPlugin, LoaderOptionsPlugin } from 'webpack'
+import { LoaderOptionsPlugin } from 'webpack'
 const stylusSettingPlugin = new LoaderOptionsPlugin({
   test: /\.styl$/,
   stylus: {
@@ -52,8 +52,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    stylusSettingPlugin,
-    new HotModuleReplacementPlugin()
+    stylusSettingPlugin
   ]
 }
 

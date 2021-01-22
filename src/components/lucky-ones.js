@@ -4,35 +4,35 @@
 
 import { Component } from 'react-subx'
 import React from 'react'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
 import download from './download'
 import time from './time'
 
-function renderLuckOne (luckyOne, i) {
-  const { firstName, lastName, email } = luckyOne
-  const name = `${firstName || ''} ${lastName || ''}`
-  return (
-    <Tooltip
-      title={`${name}(${email})`}
-      placement='top'
-      key={email + i}
-    >
-      <div className='person' key={email + '__' + i}>
-        <img
-          className='iblock mg2y animated jackInTheBox luck-avatar-person'
-          height={40}
-          width={40}
-          src={
-            !luckyOne.avatar
-              ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
-              : luckyOne.avatar
-          }
-          alt={name}
-        />
-      </div>
-    </Tooltip>
-  )
-}
+// function renderLuckOne (luckyOne, i) {
+//   const { firstName, lastName, email } = luckyOne
+//   const name = `${firstName || ''} ${lastName || ''}`
+//   return (
+//     <Tooltip
+//       title={`${name}(${email})`}
+//       placement='top'
+//       key={email + i}
+//     >
+//       <div className='person' key={email + '__' + i}>
+//         <img
+//           className='iblock mg2y animated jackInTheBox luck-avatar-person'
+//           height={40}
+//           width={40}
+//           src={
+//             !luckyOne.avatar
+//               ? 'https://pngimage.net/wp-content/uploads/2018/06/noavatar-png-2.png'
+//               : luckyOne.avatar
+//           }
+//           alt={name}
+//         />
+//       </div>
+//     </Tooltip>
+//   )
+// }
 
 function buildCsv (ones) {
   return ones.reduce((prev, curr, i) => {
@@ -54,10 +54,6 @@ window.downloadCsv = downloadCsv
 
 export default class LuckyOnes extends Component {
   render () {
-    const { store } = this.props
-    const { winners, luckyOnes } = store
-    const values = Object.values(winners)
-    const values1 = Object.values(luckyOnes)
     const ones = JSON.parse(
       window.localStorage.getItem(window.rcLsKey)
     ) || []
@@ -73,17 +69,6 @@ export default class LuckyOnes extends Component {
                 >
                   Download csv
                 </Button>
-              </div>
-            )
-            : null
-        }
-        {
-          values1.length
-            ? (
-              <div className='persons'>
-                {
-                  values.map(renderLuckOne)
-                }
               </div>
             )
             : null
