@@ -5,7 +5,8 @@
 import React from 'react'
 import { Component } from 'react-subx'
 import copy from 'json-deep-copy'
-import { Modal, Input, Button, InputNumber, Icon } from 'antd'
+import { EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { Modal, Input, Button, InputNumber } from 'antd'
 import './prize-setting.styl'
 
 const InputGroup = Input.Group
@@ -96,11 +97,7 @@ export default class PrizeSetting extends Component {
     const { showPrizeEdit } = this.props.store
     return (
       <div>
-        <Icon
-          type='edit'
-          className='prize-setting pointer'
-          onClick={this.handleEdit}
-        />
+        <EditOutlined className='prize-setting pointer' onClick={this.handleEdit} />
         <Modal
           title='Edit prizes'
           wdith='90%'
@@ -113,7 +110,7 @@ export default class PrizeSetting extends Component {
           }
           <div className='pd1y'>
             <Button onClick={this.handleAdd}>
-              <Icon type='plus-circle' />
+              <PlusCircleOutlined />
             </Button>
           </div>
         </Modal>

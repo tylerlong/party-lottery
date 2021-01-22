@@ -1,6 +1,7 @@
 import React from 'react'
 import { Component } from 'react-subx'
-import { Button, Spin, Icon } from 'antd'
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Spin } from 'antd'
 import User from './user'
 import BgSelect from './bg-select'
 import ParticleBg from './bg-particle'
@@ -25,14 +26,14 @@ export default class App extends Component {
             store.user
               ? (
                 <div className='fleft'>
-                  <Icon type='user' /> {store.user.contact.email}
+                  <UserOutlined /> {store.user.contact.email}
                 </div>
               )
               : null
           }
           <div className='fright'>
             <span onClick={store.handleLogout} className='pointer'>
-              <Icon type='logout' /> Log out
+              <LogoutOutlined /> Log out
             </span>
           </div>
         </div>
@@ -54,8 +55,8 @@ export default class App extends Component {
     return (
       <div className='main aligncenter login-page'>
         <div className='logo'>
-          <img src={require('../images/rc128.png')} alt='RingCentral' />
-          <img className='hide' src={require('../images/star_v0.3.png')} />
+          <img src={require('../images/rc128.png').default} alt='RingCentral' />
+          <img className='hide' src={require('../images/star_v0.3.png').default} />
         </div>
         <a href={store.authorizeUri}>
           <Button type='primary' size='large'>Login to Party Lottery System</Button>

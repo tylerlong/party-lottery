@@ -1,5 +1,6 @@
 import { Component } from 'react-subx'
-import { Button, Spin, Icon, Select, InputNumber } from 'antd'
+import { HeartOutlined, StopFilled } from '@ant-design/icons';
+import { Button, Spin, Select, InputNumber } from 'antd';
 import LuckyOne from './lucky-one'
 import React from 'react'
 
@@ -13,7 +14,8 @@ export default class Team extends Component {
       prizeLevel,
       prizeCount,
       looping,
-      choosing
+      choosing,
+      allDone
     } = store
     function renderSelects () {
       return (
@@ -22,13 +24,13 @@ export default class Team extends Component {
             type='primary'
             size='large'
             className='christmas mg1r'
-            disabled={choosing}
+            disabled={choosing || allDone}
             onClick={e => store.chooseLuckyOnes()}
           >
             {
               looping
-                ? <span><Icon type='stop' theme='filled' /> Stop</span>
-                : <span><Icon type='heart' /> Choose lucky ones</span>
+                ? <span><StopFilled /> Stop</span>
+                : <span><HeartOutlined /> Choose lucky ones</span>
             }
           </Button>
           <Select
