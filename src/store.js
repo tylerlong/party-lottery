@@ -55,90 +55,91 @@ window.rcNow = now()
 window.rcLsKey = 'luckOnes' + window.rcNow
 
 const prizeLevels = [
+
   {
-    level: 'Everyone-1',
-    count: 100
-  },
-  {
-    level: 'Everyone-2',
-    count: 100
-  },
-  {
-    level: 'Everyone-3',
-    count: 110
-  },
-  {
-    level: 'Everyone-4',
-    count: 110
-  },
-  {
-    level: 'Lucky(1)',
+    level: 'Lucky1小米摄像头',
     count: 15
   },
   {
-    level: 'Lucky(2)',
+    level: 'Lucky2小米便携睡袋',
     count: 15
   },
   {
-    level: 'Lucky(3)',
+    level: 'Lucky3米家冲牙器',
     count: 15
   },
   {
-    level: 'Lucky(4)',
+    level: 'Lucky4小熊早餐机',
     count: 18
   },
   {
-    level: 'Thrid(1)',
+    level: 'Lucky5德尔玛挂烫机',
     count: 15
   },
   {
-    level: 'Thrid(2)',
+    level: 'Third1:北鼎即热饮水机',
     count: 15
   },
   {
-    level: 'Thrid(3)',
+    level: 'Third2:Homepod Mini音箱',
+    count: 15
+  },
+  {
+    level: 'Third3:大宇电烧烤炉',
     count: 20
   },
   {
-    level: 'Second(1)',
+    level: 'Second1小米扫拖机器人',
     count: 7
   },
   {
-    level: 'Second(2)',
+    level: 'Second2九阳免洗豆浆机',
     count: 7
   },
   {
-    level: 'Second(3)',
+    level: 'Second3飞利浦加湿器',
     count: 7
   },
   {
-    level: 'First(1)',
+    level: 'First1添可智能拖地机',
     count: 10
   },
   {
-    level: 'First(2)',
+    level: 'First2戴森两用无叶风扇',
     count: 10
   },
   {
-    level: 'Top prize1',
+    level: 'Top prize1:富士微单',
     count: 3
   },
   {
-    level: 'Top prize2',
+    level: 'Top prize2:iPad pro',
     count: 3
   },
   {
-    level: 'Top prize3',
+    level: 'Top prize3:极光家用投影',
     count: 3
   },
   {
-    level: 'Super Top1',
-    count: 1
+    level: 'Super Top:iPhone12',
+    count: 2
   },
   {
-    level: 'Super Top2',
-    count: 1
-  }
+    level: 'Surprise-1惊喜盲盒',
+    count: 134
+  },
+  {
+    level: 'Surprise-2米家充电台灯',
+    count: 110
+  },
+  {
+    level: 'Surprise-3便携U型枕',
+    count: 100
+  },
+  {
+    level: 'Surprise-4小米屏幕灯',
+    count: 100
+  },
 ]
 function resize () {
   const size = window.innerHeight - pagePadding
