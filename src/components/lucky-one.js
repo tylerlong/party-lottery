@@ -14,7 +14,7 @@ export default class LuckyOne extends Component {
     } else {
       cls = 'less-than-2'
     }
-    const luckyOneArray = Object.values(winners)
+    const luckyOneArray = winners
     function renderOne (luckyOne) {
       return (
         <div className='email animated tada fix'>

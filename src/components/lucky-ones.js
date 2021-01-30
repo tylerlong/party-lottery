@@ -56,7 +56,7 @@ export default class LuckyOnes extends Component {
   render () {
     const { store } = this.props
     const { luckyOnes } = store
-    const values1 = Object.values(luckyOnes)
+    const values1 = luckyOnes
     const ones = JSON.parse(
       window.localStorage.getItem(window.rcLsKey)
     ) || []
@@ -73,7 +73,7 @@ export default class LuckyOnes extends Component {
                   Download csv ({values1.length})
                 </Button>
               </div>
-            )
+              )
             : null
         }
       </div>

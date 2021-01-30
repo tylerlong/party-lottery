@@ -1,11 +1,11 @@
 import React from 'react'
 import { Component } from 'react-subx'
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Spin } from 'antd'
 import User from './user'
 import BgSelect from './bg-select'
-import ParticleBg from './bg-particle'
-import UniverseBg from './bg-universe'
+// import ParticleBg from './bg-particle'
+// import UniverseBg from './bg-universe'
 import NewYearBg from './bg-new-year'
 import LuckOnes from './lucky-ones'
 import Bgm from './bgm'
@@ -28,7 +28,7 @@ export default class App extends Component {
                 <div className='fleft'>
                   <UserOutlined /> {store.user.contact.email}
                 </div>
-              )
+                )
               : null
           }
           <div className='fright'>
@@ -68,14 +68,15 @@ export default class App extends Component {
 
   renderBg () {
     const { store } = this.props
-    const { bg } = store
-    if (bg === 'universe') {
-      return <UniverseBg />
-    } else if (bg === 'particle') {
-      return <ParticleBg />
-    } else {
-      return <NewYearBg store={store} />
-    }
+    // const { bg } = store
+    return <NewYearBg store={store} />
+    // if (bg === 'universe') {
+    //   return <UniverseBg />
+    // } else if (bg === 'particle') {
+    //   return <ParticleBg />
+    // } else {
+    //   return <NewYearBg store={store} />
+    // }
   }
 
   render () {

@@ -5,6 +5,7 @@ import delay from 'timeout-as-promise'
 import { fromEvent } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 import copy from 'json-deep-copy'
+import { message } from 'antd'
 
 import config from './config'
 
@@ -159,8 +160,8 @@ function getExcludeIds () {
 }
 
 const store = SubX.create({
-  luckyOnes: {},
-  winners: {},
+  luckyOnes: [],
+  winners: [],
   allDone: false,
   showPrizeEdit: false,
   prizeLevels: getPrizeLevels(),
@@ -168,7 +169,7 @@ const store = SubX.create({
   prizeCount: getPrizeLevels()[0].count,
   avatarSize: resize(),
   bg: 'newyear',
-  bgs: ['newyear', 'particle', 'universe'],
+  bgs: ['newyear'],
   getExcludeIds: getExcludeIds(),
   looping: false,
   handleOkPrizeEdit (prizes) {
@@ -191,6 +192,7 @@ const store = SubX.create({
       r => r.level === v
     )
     store.prizeCount = obj.count
+    store.winners = []
   },
   handleChangeCount (v) {
     store.prizeCount = parseInt(v, 10)
@@ -241,31 +243,41 @@ const store = SubX.create({
     this.team = this.teams.find(team => team.id === id)
     await this.fetchMembers()
   },
-  async chooseLuckyOne () {
-    const items = this.team.members.filter(id => {
-      return !this.luckyOnes[id]
+  chooseLuckyOne (luckyOnesOngoing = []) {
+    let items = this.pool || this.team.members.filter(id => {
+      return !this.luckyOnes[id] && !luckyOnesOngoing[id]
     })
-    const luckOneId = items[Math.floor(Math.random() * items.length)]
+    if (!items.length) {
+      return null
+    }
+    const i = Math.floor(Math.random() * items.length)
+    const luckOneId = items[i]
     const luckyOne = copy(this.members[luckOneId])
-    this.luckyOnes[luckOneId] = {
+    items.splice(i, 1)
+    this.pool = items
+    return {
       ...luckyOne,
       prizeLevel: this.prizeLevel
     }
-    this.winners[luckOneId] = {
-      ...luckyOne,
-      prizeLevel: this.prizeLevel
-    }
-    window.localStorage.setItem(
-      window.rcLsKey,
-      JSON.stringify(
-        Object.values(store.luckyOnes)
-      )
-    )
+    // this.luckyOnes[luckOneId] = {
+    //   ...luckyOne,
+    //   prizeLevel: this.prizeLevel
+    // }
+    // this.winners[luckOneId] = {
+    //   ...luckyOne,
+    //   prizeLevel: this.prizeLevel
+    // }
+    // window.localStorage.setItem(
+    //   window.rcLsKey,
+    //   JSON.stringify(
+    //     Object.values(store.luckyOnes)
+    //   )
+    // )
   },
 
   async notifyPrize () {
     const { prizeLevel } = this
-    const persons = Object.values(this.winners)
+    const persons = this.winners
     const str = persons.map(p => `![:Person](${p.id})`).join(' ')
     try {
       await this.postMessage(
@@ -280,22 +292,57 @@ const store = SubX.create({
     }
   },
 
+  // checkAllGetPrize (ones) {
+  //   return this.luckyOnes.length + ones.length === this.team.members.length - this.excludeIds.length
+  // },
+
   async chooseLuckyOnes () {
     if (this.looping) {
       delete this.tempOne
       this.looping = false
       this.choosing = true
       const { prizeCount } = this
-      this.winners = {}
+      this.winners = []
+      const ones = []
+      await delay(200)
+      const isLess = prizeCount < 30
       for (let i = 0; i < prizeCount; i++) {
-        if (Object.keys(this.luckyOnes).length === this.team.members.length - this.excludeIds.length) {
+        const one = this.chooseLuckyOne(ones)
+        if (!one) {
           this.allDone = true
-          window.alert('Every one has received gifts!')
+          message.success('Every one has received gifts!')
           break
         }
-        await this.chooseLuckyOne()
-        await delay(100)
+        if (isLess) {
+          this.winners = [
+            ...copy(this.winners),
+            one
+          ]
+          this.luckyOnes = [
+            ...copy(this.luckyOnes),
+            one
+          ]
+          await delay(10)
+        } else {
+          ones.push(one)
+        }
       }
+      if (!isLess) {
+        this.winners = [
+          ...copy(this.winners),
+          ...ones
+        ]
+        this.luckyOnes = [
+          ...copy(this.luckyOnes),
+          ...ones
+        ]
+      }
+      window.localStorage.setItem(
+        window.rcLsKey,
+        JSON.stringify(
+          store.luckyOnes
+        )
+      )
       this.notifyPrize()
       this.choosing = false
     } else {
