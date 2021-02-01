@@ -58,87 +58,87 @@ window.rcLsKey = 'luckOnes' + window.rcNow
 const prizeLevels = [
 
   {
-    level: 'Lucky1小米摄像头',
+    level: 'Lucky1',
     count: 15
   },
   {
-    level: 'Lucky2小米便携睡袋',
+    level: 'Lucky2',
     count: 15
   },
   {
-    level: 'Lucky3米家冲牙器',
+    level: 'Lucky3',
     count: 15
   },
   {
-    level: 'Lucky4小熊早餐机',
+    level: 'Lucky4',
     count: 18
   },
   {
-    level: 'Lucky5德尔玛挂烫机',
+    level: 'Lucky5',
     count: 15
   },
   {
-    level: 'Third1:北鼎即热饮水机',
+    level: 'Third1',
     count: 15
   },
   {
-    level: 'Third2:Homepod Mini音箱',
+    level: 'Third2',
     count: 15
   },
   {
-    level: 'Third3:大宇电烧烤炉',
+    level: 'Third3',
     count: 20
   },
   {
-    level: 'Second1小米扫拖机器人',
+    level: 'Second1',
     count: 7
   },
   {
-    level: 'Second2九阳免洗豆浆机',
+    level: 'Second2',
     count: 7
   },
   {
-    level: 'Second3飞利浦加湿器',
+    level: 'Second3',
     count: 7
   },
   {
-    level: 'First1添可智能拖地机',
+    level: 'First1',
     count: 10
   },
   {
-    level: 'First2戴森两用无叶风扇',
+    level: 'First2',
     count: 10
   },
   {
-    level: 'Top prize1:富士微单',
+    level: 'Top prize1',
     count: 3
   },
   {
-    level: 'Top prize2:iPad pro',
+    level: 'Top prize2',
     count: 3
   },
   {
-    level: 'Top prize3:极光家用投影',
+    level: 'Top prize3',
     count: 3
   },
   {
-    level: 'Super Top:iPhone12',
+    level: 'Super Top',
     count: 2
   },
   {
-    level: 'Surprise-1惊喜盲盒',
+    level: 'Surprise-1',
     count: 134
   },
   {
-    level: 'Surprise-2米家充电台灯',
+    level: 'Surprise-2',
     count: 110
   },
   {
-    level: 'Surprise-3便携U型枕',
+    level: 'Surprise-3',
     count: 100
   },
   {
-    level: 'Surprise-4小米屏幕灯',
+    level: 'Surprise-4',
     count: 100
   },
 ]
@@ -278,18 +278,25 @@ const store = SubX.create({
   async notifyPrize () {
     const { prizeLevel } = this
     const persons = this.winners
-    const str = persons.map(p => `![:Person](${p.id})`).join(' ')
-    try {
-      await this.postMessage(
-        this.team.id,
-        {
-          text: `:tada: :tada: Congratulations ${str} wins Prize ${prizeLevel} ! :tada: :tada:`
-        }
-      )
-    } catch (e) {
-      console.log('send msg fails')
-      console.log(e)
+    const max = 50
+    let i = 0
+    const len = persons.length
+    for (i = 0; i < len; i = i + max) {
+      const str = persons.slice(i, i + max).map(p => `![:Person](${p.id})`).join(' ')
+      const text = `:tada: :tada: Congratulations ${str} wins Prize ${prizeLevel} ! :tada: :tada:`
+      try {
+        await this.postMessage(
+          this.team.id,
+          {
+            text: `:tada: :tada: Congratulations ${str} wins Prize ${prizeLevel} ! :tada: :tada:`
+          }
+        )
+      } catch (e) {
+        console.log('send msg fails')
+        console.log(e)
+      }
     }
+
   },
 
   // checkAllGetPrize (ones) {
