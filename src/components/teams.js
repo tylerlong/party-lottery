@@ -10,10 +10,15 @@ export default class Teams extends Component {
       <div className='relative'>
         <div className={store.team ? 'team-selected' : ''}>
           <Select
-            defaultValue='-1'
-            onChange={value => store.selectTeam(value)}
+            showSearch
+            className='team-search'
+            placeholder='Please select a team'
+            onSelect={value => store.selectTeam(value)}
+            optionFilterProp='children'
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
           >
-            <Select.Option key='-1' value='-1'>Please select a team</Select.Option>
             {
               store.teams.map(
                 team => <Select.Option value={team.id} key={team.id}>{team.name}</Select.Option>
