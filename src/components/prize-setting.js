@@ -6,7 +6,7 @@ import React from 'react'
 import { Component } from 'react-subx'
 import copy from 'json-deep-copy'
 import { EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
-import { Modal, Input, Button, InputNumber } from 'antd'
+import { Modal, Input, Button, InputNumber, message } from 'antd'
 import './prize-setting.styl'
 
 const InputGroup = Input.Group
@@ -70,6 +70,26 @@ export default class PrizeSetting extends Component {
     })
   }
 
+  changeDesc = e => {
+    const v = e.target.value
+    if (!v) {
+      return message.error('win prize description required')
+    }
+    this.props.store.saveDesc(v)
+  }
+
+  renderDescEdit () {
+    return (
+      <Input
+        value={this.props.store.desc}
+        style={{ width: '60%' }}
+        addonBefore='Win prize description'
+        placeholder='win prize description'
+        onChange={this.changeDesc}
+      />
+    )
+  }
+
   renderItem = (item, i) => {
     return (
       <div className='pd1y' key={i + 'prize-edit'}>
@@ -105,6 +125,9 @@ export default class PrizeSetting extends Component {
           onCancel={this.handleCancelPrizeEdit}
           onOk={this.handleOkPrizeEdit}
         >
+          {
+            this.renderDescEdit()
+          }
           {
             this.state.prizes.map(this.renderItem)
           }

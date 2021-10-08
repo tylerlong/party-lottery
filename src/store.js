@@ -154,6 +154,11 @@ function getPrizeLevels () {
   return st ? JSON.parse(st) : copy(prizeLevels)
 }
 
+function getDesc () {
+  const st = window.localStorage.getItem('prizeDesc')
+  return st || 'wins prize'
+}
+
 function getExcludeIds () {
   const st = window.localStorage.getItem('excludeIds')
   return st ? JSON.parse(st) : []
@@ -161,6 +166,7 @@ function getExcludeIds () {
 
 const store = SubX.create({
   luckyOnes: [],
+  desc: getDesc(),
   winners: [],
   allDone: false,
   showPrizeEdit: false,
@@ -178,6 +184,12 @@ const store = SubX.create({
       'prizeLevels', JSON.stringify(prizes)
     )
     store.showPrizeEdit = false
+  },
+  saveDesc (desc) {
+    store.desc = desc
+    window.localStorage.setItem(
+      'prizeDesc', desc
+    )
   },
   excludeIds: [],
   handleCancelPrizeEdit () {
@@ -276,19 +288,19 @@ const store = SubX.create({
   },
 
   async notifyPrize () {
-    const { prizeLevel } = this
+    const { prizeLevel, desc } = this
     const persons = this.winners
     const max = 50
     let i = 0
     const len = persons.length
     for (i = 0; i < len; i = i + max) {
       const str = persons.slice(i, i + max).map(p => `![:Person](${p.id})`).join(' ')
-      const text = `:tada: :tada: Congratulations ${str} wins Prize ${prizeLevel} ! :tada: :tada:`
+      const text = `:tada: :tada: Congratulations ${str} ${desc} ${prizeLevel} ! :tada: :tada:`
       try {
         await this.postMessage(
           this.team.id,
           {
-            text: `:tada: :tada: Congratulations ${str} wins Prize ${prizeLevel} ! :tada: :tada:`
+            text
           }
         )
       } catch (e) {
