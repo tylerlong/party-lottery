@@ -6,7 +6,7 @@ import React from 'react'
 import { Component } from 'react-subx'
 import copy from 'json-deep-copy'
 import { EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
-import { Modal, Input, Button, InputNumber, message } from 'antd'
+import { Modal, Input, Button, InputNumber, message, Tooltip } from 'antd'
 import './prize-setting.styl'
 
 const InputGroup = Input.Group
@@ -117,7 +117,16 @@ export default class PrizeSetting extends Component {
     const { showPrizeEdit } = this.props.store
     return (
       <div>
-        <EditOutlined className='prize-setting pointer' onClick={this.handleEdit} />
+        <Tooltip
+          title='Click here to edit prize name and settings'
+          defaultVisible={true}
+          placement='leftTop'
+        >
+          <EditOutlined
+            className='prize-setting pointer'
+            onClick={this.handleEdit}
+          />
+        </Tooltip>
         <Modal
           title='Edit prizes'
           wdith='90%'
