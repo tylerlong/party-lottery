@@ -159,6 +159,11 @@ function getDesc () {
   return st || 'wins prize'
 }
 
+function getBg () {
+  const st = window.localStorage.getItem('bgUrl')
+  return st || ''
+}
+
 function getExcludeIds () {
   const st = window.localStorage.getItem('excludeIds')
   return st ? JSON.parse(st) : []
@@ -174,6 +179,7 @@ const store = SubX.create({
   prizeLevel: getPrizeLevels()[0].level,
   prizeCount: getPrizeLevels()[0].count,
   avatarSize: resize(),
+  bgUrl: getBg(),
   bg: 'newyear',
   bgs: ['newyear'],
   getExcludeIds: getExcludeIds(),
@@ -189,6 +195,12 @@ const store = SubX.create({
     store.desc = desc
     window.localStorage.setItem(
       'prizeDesc', desc
+    )
+  },
+  saveBg (url) {
+    store.bgUrl = url
+    window.localStorage.setItem(
+      'bgUrl', url
     )
   },
   excludeIds: [],

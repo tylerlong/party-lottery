@@ -78,6 +78,11 @@ export default class PrizeSetting extends Component {
     this.props.store.saveDesc(v)
   }
 
+  changeBg = e => {
+    const v = e.target.value
+    this.props.store.saveBg(v)
+  }
+
   renderDescEdit () {
     return (
       <Input
@@ -87,6 +92,20 @@ export default class PrizeSetting extends Component {
         placeholder='win prize description'
         onChange={this.changeDesc}
       />
+    )
+  }
+
+  renderBgEdit () {
+    return (
+      <div className='pd1y'>
+        <Input
+          value={this.props.store.bgUrl}
+          style={{ width: '60%' }}
+          addonBefore='Background image url'
+          placeholder='https://xxxx.com/bg1920x1080.jpg'
+          onChange={this.changeBg}
+        />
+      </div>
     )
   }
 
@@ -118,7 +137,7 @@ export default class PrizeSetting extends Component {
     return (
       <div>
         <Tooltip
-          title='Click here to edit prize name and settings'
+          title='Click here to edit prize name, bg image and other settings'
           defaultVisible={true}
           placement='leftTop'
         >
@@ -136,6 +155,9 @@ export default class PrizeSetting extends Component {
         >
           {
             this.renderDescEdit()
+          }
+          {
+            this.renderBgEdit()
           }
           {
             this.state.prizes.map(this.renderItem)
