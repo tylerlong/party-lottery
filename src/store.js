@@ -159,6 +159,11 @@ function getDesc () {
   return st || 'wins prize'
 }
 
+function getShowHeadShot () {
+  const st = window.localStorage.getItem('showHeadShot')
+  return st === 'false' ? false : true
+}
+
 function getBg () {
   const st = window.localStorage.getItem('bgUrl')
   return st || ''
@@ -172,6 +177,7 @@ function getExcludeIds () {
 const store = SubX.create({
   luckyOnes: [],
   desc: getDesc(),
+  showHeadShot: getShowHeadShot(),
   winners: [],
   allDone: false,
   showPrizeEdit: false,
@@ -195,6 +201,12 @@ const store = SubX.create({
     store.desc = desc
     window.localStorage.setItem(
       'prizeDesc', desc
+    )
+  },
+  saveShowHeadShot (v) {
+    store.showHeadShot = v
+    window.localStorage.setItem(
+      'showHeadShot', v.toString()
     )
   },
   saveBg (url) {

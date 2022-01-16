@@ -6,7 +6,12 @@ import React from 'react'
 import { Component } from 'react-subx'
 import copy from 'json-deep-copy'
 import { EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
-import { Modal, Input, Button, InputNumber, message, Tooltip } from 'antd'
+import {
+  Modal, Input, Button, InputNumber,
+  message,
+  Tooltip,
+  Switch
+} from 'antd'
 import './prize-setting.styl'
 
 const InputGroup = Input.Group
@@ -78,6 +83,10 @@ export default class PrizeSetting extends Component {
     this.props.store.saveDesc(v)
   }
 
+  changeShowHeadShot = v => {
+    this.props.store.saveShowHeadShot(v)
+  }
+
   changeBg = e => {
     const v = e.target.value
     this.props.store.saveBg(v)
@@ -104,6 +113,19 @@ export default class PrizeSetting extends Component {
           addonBefore='Background image url'
           placeholder='https://xxxx.com/bg1920x1080.jpg'
           onChange={this.changeBg}
+        />
+      </div>
+    )
+  }
+
+  renderBgEdit () {
+    return (
+      <div className='pd1y'>
+        <Switch
+          checked={this.props.store.showHeadShot}
+          unCheckedChildren='Hide avatar'
+          checkedChildren='Show avatar'
+          onChange={this.changeShowHeadShot}
         />
       </div>
     )
