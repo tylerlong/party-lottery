@@ -118,7 +118,7 @@ export default class PrizeSetting extends Component {
     )
   }
 
-  renderBgEdit () {
+  renderHeadShotEdit () {
     return (
       <div className='pd1y'>
         <Switch
@@ -180,6 +180,9 @@ export default class PrizeSetting extends Component {
           }
           {
             this.renderBgEdit()
+          }
+          {
+            this.renderHeadShotEdit()
           }
           {
             this.state.prizes.map(this.renderItem)
